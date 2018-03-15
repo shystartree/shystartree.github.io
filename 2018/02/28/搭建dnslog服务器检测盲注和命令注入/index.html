@@ -8,17 +8,16 @@
   <link rel="dns-prefetch" href="//shystartree.com">
   <title>搭建dnslog服务器检测盲注和命令注入 | qingyu&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0x0、域名和配置">
-<meta name="keywords" content="安全,dnslog">
+  <meta name="keywords" content="安全,dnslog">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搭建dnslog服务器检测盲注和命令注入">
 <meta property="og:url" content="//shystartree.com/2018/02/28/搭建dnslog服务器检测盲注和命令注入/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:description" content="0x0、域名和配置">
-<meta property="og:updated_time" content="2018-03-15T05:38:33.069Z">
+<meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/dnslog.jpg">
+<meta property="og:updated_time" content="2018-03-15T06:08:21.720Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建dnslog服务器检测盲注和命令注入">
-<meta name="twitter:description" content="0x0、域名和配置">
+<meta name="twitter:image" content="http://p2or7ktgu.bkt.clouddn.com/dnslog.jpg">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -191,18 +190,19 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="0x0、域名和配置"><a href="#0x0、域名和配置" class="headerlink" title="0x0、域名和配置"></a>0x0、域名和配置</h4><a id="more"></a>
-<p>准备两个域名 shystaree.com &amp; shystartree.xxx<br>shystaree.com作为NS服务器域名,增加两行dns记录：<br>A    ns2    默认    198.44.172.25    – 10 分钟 –<br>A    ns1    默认    198.44.172.25    – 10 分钟 –</p>
-<p>shystartree.xxx用作记录域名，此时我并不是增加dns记录，而是直接修改dns服务器<br>修改xyz域名的DNS服务器为： ns1.shystartree.com、ns2.shystartree.com </p>
+        <p><img src="http://p2or7ktgu.bkt.clouddn.com/dnslog.jpg" alt="dnslog"></p>
+<a id="more"></a>
+<h4 id="0x0、域名和配置"><a href="#0x0、域名和配置" class="headerlink" title="0x0、域名和配置"></a>0x0、域名和配置</h4><p>准备两个域名 shystaree.com &amp; shystartree.xxx<br>shystaree.com作为NS服务器域名,增加两行dns记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A	ns2	默认	198.44.172.25	-- 10 分钟 --</span><br><span class="line">A	ns1	默认	198.44.172.25	-- 10 分钟 --</span><br></pre></td></tr></table></figure></p>
+<p>shystartree.xxx用作记录域名，此时我并不是增加dns记录(直接增加dns记录会失灵，不知啥回事)，而是直接修改dns服务器<br>修改shystartree.xxx域名的DNS服务器为：<code>ns1.shystartree.com、ns2.shystartree.com</code><br><em>生效时间可能需要48小时，请耐心等候</em></p>
 <h4 id="0x1、文件准备"><a href="#0x1、文件准备" class="headerlink" title="0x1、文件准备"></a>0x1、文件准备</h4><p>dockerfile内容如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu:14.04</span><br><span class="line"></span><br><span class="line">RUN sed -i &apos;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&apos; /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line">RUN apt-get update -y &amp;&amp; apt-get install -y python &amp;&amp; apt-get install python-pip -y &amp;&amp; apt-get install git -y</span><br><span class="line">RUN git clone https://github.com/bit4woo/DNSLog</span><br><span class="line">WORKDIR /DNSLog/dnslog</span><br><span class="line">RUN pip install -r requirements.pip</span><br><span class="line"></span><br><span class="line">COPY ./settings.py /DNSLog/dnslog/dnslog/settings.py</span><br><span class="line"></span><br><span class="line">COPY ./start.sh /DNSLog/dnslog/start.sh</span><br><span class="line">RUN chmod +x start.sh</span><br><span class="line">CMD [&quot;./start.sh&quot;]</span><br><span class="line"></span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure></p>
-<p>下载 dnslog/dnslog/settings.py并对如下字段进行对应的修改，保存settings.py：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 做dns记录的域名</span><br><span class="line">DNS_DOMAIN = &apos;shystartree.xxx&apos;</span><br><span class="line"></span><br><span class="line"># 记录管理的域名</span><br><span class="line"></span><br><span class="line">ADMIN_DOMAIN = &apos;admin.shystartree.xxx&apos;</span><br><span class="line"></span><br><span class="line"># NS域名</span><br><span class="line"></span><br><span class="line">NS1_DOMAIN = &apos;ns1.shystartree.com&apos;</span><br><span class="line">NS2_DOMAIN = &apos;ns2.shystartree.com&apos;</span><br><span class="line"></span><br><span class="line"># 服务器外网地址</span><br><span class="line"></span><br><span class="line">SERVER_IP = &apos;198.88.188.88&apos;</span><br></pre></td></tr></table></figure></p>
+<p>下载 dnslog/dnslog/settings.py 并对如下字段进行对应的修改，保存settings.py：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 做dns记录的域名</span><br><span class="line">DNS_DOMAIN = &apos;shystartree.xxx&apos;</span><br><span class="line"></span><br><span class="line"># 记录管理的域名</span><br><span class="line"></span><br><span class="line">ADMIN_DOMAIN = &apos;admin.shystartree.xxx&apos;</span><br><span class="line"></span><br><span class="line"># NS域名</span><br><span class="line"></span><br><span class="line">NS1_DOMAIN = &apos;ns1.shystartree.com&apos;</span><br><span class="line">NS2_DOMAIN = &apos;ns2.shystartree.com&apos;</span><br><span class="line"></span><br><span class="line"># 服务器外网地址</span><br><span class="line"></span><br><span class="line">SERVER_IP = &apos;198.88.188.88&apos;</span><br></pre></td></tr></table></figure></p>
 <p>创建一个dnslog的启动脚本，保存为start.sh：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">python manage.py runserver 0.0.0.0:80</span><br></pre></td></tr></table></figure></p>
 <h4 id="0x2、构建docker"><a href="#0x2、构建docker" class="headerlink" title="0x2、构建docker"></a>0x2、构建docker</h4><p>准备上述的三个文件<strong>dockerfile、settings.py、start.sh</strong> 执行下面的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker build .</span><br><span class="line">docker tag e99c409f6585 bit4/dnslog</span><br><span class="line">docker run -d -it -p 80:80 -p 53:53/udp bit4/dnslog</span><br><span class="line"></span><br><span class="line">docker exec -it container_ID_or_name /bin/bash</span><br><span class="line">./start.sh</span><br></pre></td></tr></table></figure></p>
 <p>执行完后，默认已经开启dnslog服务器了</p>
 <h4 id="0x3、配置验证"><a href="#0x3、配置验证" class="headerlink" title="0x3、配置验证"></a>0x3、配置验证</h4><p>使用nslookup命令进行验证，如果可以直接测试xxx.test.shystartree.xxx了，说明所有配置已经全部生效；如果直接查询失败，而指定了dns服务器为 ns1.shystartree.com查询成功，说明dns服务器配置正确了，但是ns记录的设置需要等待同步或者配置错误。</p>
 <p>nslookup输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxx.test.shystartree.xxx</span><br><span class="line">server ns1.shystartree.com</span><br><span class="line">yyy.test.shystartree.xxx</span><br></pre></td></tr></table></figure></p>
 <p>也可以ping下test.shystartree.xxx，打开 admin.shystartree.xxx看看是否有记录</p>
-<h4 id="0x4、payload使用技巧"><a href="#0x4、payload使用技巧" class="headerlink" title="0x4、payload使用技巧"></a>0x4、payload使用技巧</h4><p>linux&amp;windows通用：<code>ping -n 3 xxx.shystartree.xxx || ping -c 3 xxx.shystartree.xxx</code><br>linux:  curl xxxxxxxxxxxx.shystartree.xxx<br>windows: start <a href="http://xxxxxxxxxxxx.shystartree.xxx" target="_blank" rel="noopener">http://xxxxxxxxxxxx.shystartree.xxx</a> </p>
+<h4 id="0x4、payload使用技巧"><a href="#0x4、payload使用技巧" class="headerlink" title="0x4、payload使用技巧"></a>0x4、payload使用技巧</h4><p>linux&amp;windows通用：<code>ping -n 3 xxx.shystartree.xxx || ping -c 3 xxx.shystartree.xxx</code><br>linux:  <code>curl xxxxxxxxxxxx.shystartree.xxx</code><br>windows: <code>start http://xxxxxxxxxxxx.shystartree.xxx</code></p>
 <h4 id="0x5、使用payload检测漏洞"><a href="#0x5、使用payload检测漏洞" class="headerlink" title="0x5、使用payload检测漏洞"></a>0x5、使用payload检测漏洞</h4><p>检测命令注入或盲注漏洞的时候，会生成一串md5字符串，即find_str,然后访问dnslog后台看是否有对应的md5字符串记录，有即存在漏洞<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 确定命令注入是否存在</span><br><span class="line">def verify_conmand(dnslog_server, find_str):</span><br><span class="line">    dnslog_server = dnslog_server.replace(&quot;test.&quot;, &quot;&quot;)</span><br><span class="line">    token = get_token(dnslog_server)</span><br><span class="line">    get_dnsurl = &quot;http://%s/apiquery/dns/test/%s/&quot; % (dnslog_server, token)</span><br><span class="line">    get_weburl = &quot;http://%s/apiquery/web/test/%s/&quot; % (dnslog_server, token)</span><br><span class="line">    res_dnsapi = requests.get(url=get_dnsurl).content</span><br><span class="line">    res_webapi = requests.get(url=get_weburl).content</span><br><span class="line">    if res_webapi.count(&quot;:&quot;) &gt; 0 and res_webapi.count(&quot;&#123;&quot;) &gt; 0 and res_webapi.count(&quot;&#125;&quot;) &gt; 0:</span><br><span class="line">        getwebapi = json.loads(res_webapi)</span><br><span class="line">        if getwebapi[&apos;status&apos;] and find_str in getwebapi[&apos;content&apos;]:</span><br><span class="line">            return True</span><br><span class="line">    if res_dnsapi.count(&quot;:&quot;) &gt; 0 and res_dnsapi.count(&quot;&#123;&quot;) &gt; 0 and res_dnsapi.count(&quot;&#125;&quot;) &gt; 0:</span><br><span class="line">        getdnsapi = json.loads(res_dnsapi)</span><br><span class="line">        if getdnsapi[&apos;status&apos;] and find_str in getdnsapi[&apos;content&apos;]:</span><br><span class="line">            return True</span><br><span class="line">    return False</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>参考文章：<br><a href="http://www.code2sec.com/shi-yong-dockerda-jian-dnslogfu-wu-qi-pythonban-kai-yuan-cloudeyede-bu-shu.html" target="_blank" rel="noopener">使用docker搭建dnslog服务器</a></p>
@@ -507,19 +507,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">elk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经验</a>
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经验</a>
               </li>
             
             <div class="clearfix"></div>
