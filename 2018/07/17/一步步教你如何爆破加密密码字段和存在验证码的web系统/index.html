@@ -13,16 +13,16 @@
 <meta property="og:title" content="一步步教你如何爆破加密密码字段和存在验证码的web系统">
 <meta property="og:url" content="//shystartree.com/2018/07/17/一步步教你如何爆破加密密码字段和存在验证码的web系统/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/201807161657_blog.jpg">
+<meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/201807161658_blog.jpg">
 <meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/WX20180716-160420.png">
 <meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/WX20180716-163519.png">
 <meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/WX20180716-195904.png">
 <meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/WX20180716-202723.png">
 <meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/WX20180717-114916.png">
-<meta property="og:updated_time" content="2018-07-17T09:06:32.410Z">
+<meta property="og:updated_time" content="2018-07-17T09:13:30.389Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一步步教你如何爆破加密密码字段和存在验证码的web系统">
-<meta name="twitter:image" content="http://p2or7ktgu.bkt.clouddn.com/201807161657_blog.jpg">
+<meta name="twitter:image" content="http://p2or7ktgu.bkt.clouddn.com/201807161658_blog.jpg">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -195,7 +195,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://p2or7ktgu.bkt.clouddn.com/201807161657_blog.jpg" alt="p0"></p>
+        <p><img src="http://p2or7ktgu.bkt.clouddn.com/201807161658_blog.jpg" alt="p0"></p>
 <a id="more"></a>
 <h4 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h4><p>一直想对公司所在的某管理平台（下文简称为A平台）进行一下弱口令检测，但是该平台做了设置验证码（做了一定的干扰效果）和密码加密等防御措施而无法使用一些常规的爆破工具进行攻击。本文将结合在检测过程中遇到的问题一步步地讲解如何突破障碍达到检测的目的，各位读者可以举一反三进行其他系统的爆破测试。</p>
 <h4 id="二、寻找一个简单的爆破点"><a href="#二、寻找一个简单的爆破点" class="headerlink" title="二、寻找一个简单的爆破点"></a>二、寻找一个简单的爆破点</h4><p>A平台算是公司内部的一个通用平台，所以其的账号密码也能在其他系统上登录，但是这些系统多多少少都做了一定的防御，基本都具有密码次数过多封ip、验证码、密码字段加密、请求间隔时间检测等的爆破防御，故本文选择了一个仅仅拥有密码字段加密和设置验证码（验证码干扰量最少）的A平台，如果读者非不得已要突破密码次数过多封ip的防御，可以在本文的基础上加入代理池，如何筛选出有效的代理池还请自行研究。</p>
@@ -552,19 +552,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">社会工程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">elk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
+                <a href="javascript:void(0)" class="js-tag color3">爆破</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">msf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">社会工程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -573,10 +577,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">爆破</a>
               </li>
             
             <div class="clearfix"></div>
