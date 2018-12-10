@@ -13,11 +13,11 @@
 <meta property="og:title" content="搭建dnslog服务器检测盲注和命令注入">
 <meta property="og:url" content="//shystartree.com/2018/02/28/搭建dnslog服务器检测盲注和命令注入/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:image" content="http://p2or7ktgu.bkt.clouddn.com/dnslog.jpg">
-<meta property="og:updated_time" content="2018-07-12T07:59:20.000Z">
+<meta property="og:image" content="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg">
+<meta property="og:updated_time" content="2018-12-07T07:35:34.755Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建dnslog服务器检测盲注和命令注入">
-<meta name="twitter:image" content="http://p2or7ktgu.bkt.clouddn.com/dnslog.jpg">
+<meta name="twitter:image" content="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -190,7 +190,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://p2or7ktgu.bkt.clouddn.com/dnslog.jpg" alt="dnslog"></p>
+        <p><img src="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg" alt="dnslog"></p>
 <a id="more"></a>
 <h4 id="0x0、域名和配置"><a href="#0x0、域名和配置" class="headerlink" title="0x0、域名和配置"></a>0x0、域名和配置</h4><p>准备两个域名 shystartree.com &amp; shystartree.xxx<br>shystartree.com作为NS服务器域名,增加两行dns记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A	ns2	默认	198.44.172.25	-- 10 分钟 --</span><br><span class="line">A	ns1	默认	198.44.172.25	-- 10 分钟 --</span><br></pre></td></tr></table></figure></p>
 <p>shystartree.xxx用作记录域名，此时我并不是增加dns记录(直接增加dns记录会失灵，不知啥回事)，而是直接修改dns服务器<br>修改shystartree.xxx域名的DNS服务器为：<code>ns1.shystartree.com、ns2.shystartree.com</code><br><em>生效时间可能需要48小时，请耐心等候</em></p>
@@ -353,8 +353,8 @@
     </a>
   
   
-    <a href="/2018/01/12/ElastAlert监控日志的web攻击行为/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ElastAlert监控日志的web攻击行为</div>
+    <a href="/2018/01/15/ElastAlert监控日志的web攻击行为/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -512,23 +512,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">安全</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">社会工程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经验</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -536,11 +520,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">msf</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">爆破</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">msf</a>
+                <a href="javascript:void(0)" class="js-tag color5">社会工程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经验</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
               </li>
             
             <div class="clearfix"></div>
