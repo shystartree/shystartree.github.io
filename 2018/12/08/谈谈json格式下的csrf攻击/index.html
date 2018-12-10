@@ -14,7 +14,7 @@
 <meta property="og:url" content="//shystartree.com/2018/12/08/谈谈json格式下的csrf攻击/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
 <meta property="og:image" content="http://pjcv7vbgq.bkt.clouddn.com/WX20181210-182200@2x.png">
-<meta property="og:updated_time" content="2018-12-10T11:07:50.278Z">
+<meta property="og:updated_time" content="2018-12-10T11:17:01.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈json格式下的csrf攻击">
 <meta name="twitter:image" content="http://pjcv7vbgq.bkt.clouddn.com/WX20181210-182200@2x.png">
@@ -212,7 +212,7 @@
 <p>最后使用的poc是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://172.16.11.102/csrf/test.swf?jsonData=&#123;%22id%22:49&#125;&amp;php_url=http://172.16.11.102/csrf/test.php&amp;endpoint=http://victim.com/carrieradmin/admin/car/delete&amp;ct=application/json</span><br></pre></td></tr></table></figure></p>
 <p>当访问最后的POC，过程如下：<br>1、受害者访问POC，向attacter.com发起一条swf请求，swf向307.php发送HTTP POST请求。<br>2、attacter.com的307.php发起307跳转，跳转到victim.com，注意307跳转会带着http请求方式，header和postdata进行跳转。<br>3、victim.com收到一条POST请求，并且Content-Type为application/json。<br>4、victim.com收到一条/crossdomain.xml请求。由于第三步优先第四步执行，导致跨域。并且victim.com能收到crossdomain.xml请求，也证明了第三步的POST请求是Flash发出，而不是307.php发出。因为307.php单独发出的post请求不会主动请求crossdomain.xml。<br>我们知道，服务器A的Flash如果要向B发起一条HTTP请求，会先请求服务器B的crossdomain.xml文件，判断是否能跨域，如果文件没有，或者xml文件设置不能跨域，则不能跨域。</p>
 <h4 id="四、更进一步探索"><a href="#四、更进一步探索" class="headerlink" title="四、更进一步探索"></a>四、更进一步探索</h4><p>既然可以设置Content-Type，那么能设置Referer吗。如果能，那验证Referer的CSRF岂不都能绕过？<br>其实Flash的Header存在一个黑名单，黑名单列表的头不允许设置，其中就有Referer。不能设置的头标如下：<br>Accept-Charset、Accept-Encoding、Accept-Ranges、Age、Allow、Allowed、Authorization、Charge-To、Connect、Connection、Content-Length、Content-Location、Content-Range、Cookie、Date、Delete、ETag、Expect、Get、Head、Host、Keep-Alive、Last-Modified、Location、Max-Forwards、Options、Post、Proxy-Authenticate、Proxy-Authorization、Proxy-Connection、Public、Put、Range、<em>Referer</em>、Request-Range、Retry-After、Server、TE、Trace、Trailer、Transfer-Encoding、Upgrade、URI、<em>User-Agent</em>、Vary、Via、Warning、WWW-Authenticate 和 x-flash-version。</p>
-<h4 id="五、实际测试效果"><a href="#五、实际测试效果" class="headerlink" title="五、实际测试效果"></a>五、实际测试效果</h4><p>这种flash+307跳转攻击方法只能在旧版浏览器（ie、谷歌浏览器）适用，在2018年后更新版本的浏览器，307跳转的时候并没有把Content-Type传过去而导致csrf攻击失败。所以还望寻找一种新的攻击方法，本文的json csrf攻击方法仅仅是作为一种记录，在某些情况下还是能用到的。</p>
+<h4 id="五、实际测试效果"><a href="#五、实际测试效果" class="headerlink" title="五、实际测试效果"></a>五、实际测试效果</h4><p>这种flash+307跳转攻击方法只能在旧版浏览器适用，在2018年后更新版本的几乎所有浏览器，307跳转的时候并没有把Content-Type传过去而导致csrf攻击失败。所以还望寻找一种新的攻击方法，本文的json csrf攻击方法仅仅是作为一种记录，在某些情况下还是能用到的。</p>
 <blockquote>
 <p>参考链接：<br><a href="https://www.secpulse.com/archives/61297.html" target="_blank" rel="noopener">Exploiting JSON CSRF</a><br><a href="https://www.freebuf.com/articles/web/164234.html" target="_blank" rel="noopener">如何在JSON端点上利用CSRF漏洞</a></p>
 </blockquote>
@@ -508,15 +508,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">安全</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">社会工程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
              
               <li class="article-tag-list-item">
