@@ -13,11 +13,11 @@
 <meta property="og:title" content="搭建dnslog服务器检测盲注和命令注入">
 <meta property="og:url" content="//shystartree.com/2018/02/28/搭建dnslog服务器检测盲注和命令注入/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:image" content="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg">
-<meta property="og:updated_time" content="2018-12-07T07:35:34.756Z">
+<meta property="og:image" content="https://github.com/shystartree/blogpic/tree/master/dnslog/dnslog.jpg">
+<meta property="og:updated_time" content="2019-01-14T08:13:54.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建dnslog服务器检测盲注和命令注入">
-<meta name="twitter:image" content="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg">
+<meta name="twitter:image" content="https://github.com/shystartree/blogpic/tree/master/dnslog/dnslog.jpg">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -190,7 +190,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://pjcv7vbgq.bkt.clouddn.com/dnslog.jpg" alt="dnslog"></p>
+        <p><img src="https://github.com/shystartree/blogpic/tree/master/dnslog/dnslog.jpg" alt="dnslog"></p>
 <a id="more"></a>
 <h4 id="0x0、域名和配置"><a href="#0x0、域名和配置" class="headerlink" title="0x0、域名和配置"></a>0x0、域名和配置</h4><p>准备两个域名 shystartree.com &amp; shystartree.xxx<br>shystartree.com作为NS服务器域名,增加两行dns记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A	ns2	默认	198.44.172.25	-- 10 分钟 --</span><br><span class="line">A	ns1	默认	198.44.172.25	-- 10 分钟 --</span><br></pre></td></tr></table></figure></p>
 <p>shystartree.xxx用作记录域名，此时我并不是增加dns记录(直接增加dns记录会失灵，不知啥回事)，而是直接修改dns服务器<br>修改shystartree.xxx域名的DNS服务器为：<code>ns1.shystartree.com、ns2.shystartree.com</code><br><em>生效时间可能需要48小时，请耐心等候</em></p>
@@ -421,7 +421,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 QingYu
+    		&copy; 2019 QingYu
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
