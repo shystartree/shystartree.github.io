@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-2.5.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-3.3.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-4.png">
-<meta property="og:updated_time" content="2019-06-19T15:43:10.738Z">
+<meta property="og:updated_time" content="2019-06-19T15:47:21.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业威胁情报平台建设之暗网监控">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dwbg.png">
@@ -239,7 +239,7 @@
 <p>修改后，重启服务<code>service privoxy restart</code>。</p>
 <h5 id="2-5-验证代理器是否可用"><a href="#2-5-验证代理器是否可用" class="headerlink" title="2.5 验证代理器是否可用"></a>2.5 验证代理器是否可用</h5><p>Tor浏览器虽然可以使用<code>meek-azure</code>来访问暗网网站，但是访问速度较慢。为了验证我们搭好的代理服务器是否可用，我们可以修改Tor浏览器的网络设置（假设我们的代理服务器ip为：11.11.11.11）：<br><img src="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-2.5.png" alt="P1"><br>设置完成后访问一个暗网地址，如果能访问成功的话即说明我们的代理服务器可用，同时访问速度也比<code>meek-azure</code>快得多。<br>当然，我们也可以更快捷地输入下面的命令进行测试：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ curl -x 11.11.11.11:8118 https://httpbin.org/ip</span><br><span class="line">&#123;</span><br><span class="line">  &quot;origin&quot;: &quot;178.175.132.225, 178.175.132.225&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以查询到178.175.132.225所在地为国外的摩尔多瓦，为<code>Tor</code>节点的出口地址。</p>
+<p>可以查询到178.175.132.225的所在地为国外的摩尔多瓦，为Tor节点的出口地址。</p>
 <h4 id="三、开发实时监控程序"><a href="#三、开发实时监控程序" class="headerlink" title="三、开发实时监控程序"></a>三、开发实时监控程序</h4><p>在上一章节我们搭好了代理服务器，相当于拥有了访问暗网的钥匙，虽然可以用Tor浏览器+代理更快访问暗网网址，但是人工并不能做不到24小时监控而及时发现数据泄露事件，因此我们需要开发一个爬虫程序实时监控暗网网站。</p>
 <h5 id="3-1-暗网网站的特点"><a href="#3-1-暗网网站的特点" class="headerlink" title="3.1 暗网网站的特点"></a>3.1 暗网网站的特点</h5><p>暗网网站不同于表层网网站，没有太多花里胡哨的动态js与强大的反爬策略，因此对暗网网站爬虫也相对简单。在总结了几个常见的暗网网站后，发现暗网网站的反爬策略一般是如下几种情况：<br>1、Referer；<br>2、针对Cookie的请求频率限制；<br>3、User-Agent；<br>4、验证码；<br>5、对网站代码进行更新，修改html标签名字或位置。</p>
 <h5 id="3-2-暗网网站的反反爬虫"><a href="#3-2-暗网网站的反反爬虫" class="headerlink" title="3.2 暗网网站的反反爬虫"></a>3.2 暗网网站的反反爬虫</h5><p>针对3.1的反爬虫策略我们可以设法绕过，由于本文的主旨并不在探究反爬虫策略，故简单地说下绕过方法：<br>1、指定请求头的referer为访问暗网网站的域名；<br>2、建立多账号Cookie池，同时使用Redis对url去重实现增量爬取减少请求量；<br>3、指定User-Agent为FireFox浏览器：{‘User-Agent’: ‘Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0’};<br>4、暗网网站的验证码一般比较简单，可以简单使用ocr技术识别，如<code>tesseract</code>;<br>5、需要及时更新爬虫代码，有针对地修改反反爬虫代码。</p>
@@ -593,11 +593,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">json</a>
+                <a href="javascript:void(0)" class="js-tag color4">elk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">elk</a>
+                <a href="javascript:void(0)" class="js-tag color5">json</a>
               </li>
              
               <li class="article-tag-list-item">
