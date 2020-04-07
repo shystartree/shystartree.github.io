@@ -13,15 +13,15 @@
 <meta property="og:title" content="企业威胁情报平台建设之暗网监控">
 <meta property="og:url" content="http://dayun.shystartree.online/2019/06/18/企业威胁情报平台建设之暗网监控/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dwbg.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-2.1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-2.5.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-3.3.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-4.png">
-<meta property="og:updated_time" content="2019-06-28T05:43:19.917Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/202004070958144.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200407095703362.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200407095721672.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200407095743314.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200407095758508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-04-07T02:01:37.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="企业威胁情报平台建设之暗网监控">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dwbg.png">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/202004070958144.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -218,11 +218,11 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dwbg.png" alt="P1"></h1><a id="more"></a>
+        <h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/202004070958144.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""></h1><a id="more"></a>
 <h4 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h4><p>相信大家对暗网这个概念并不陌生，众所周知，暗网藏着一个暗黑版的交易市场，违法工具、色情交易、毒品交易、枪械信息比比皆是，俨然一个网络犯罪分子聚集的“虎狼之穴”。我们使用Tor浏览器等可以轻松访问暗网中的浅层网，主要是黄赌毒和数据情报信息，如丝绸之路等。对于企业而言，往往不免被黑客攻击而被获取大量的数据，而这些数据一般会优先在暗网售卖，如近年来的12306、各大互联网公司等的数据泄露事件。为了及时响应突发的数据泄露事件，企业需要一款实时监控暗网数据泄露的威胁情报平台，用来监控敏感数据泄露、薅羊毛、业务安全风险等事件。</p>
 <h4 id="二、代理服务器搭建"><a href="#二、代理服务器搭建" class="headerlink" title="二、代理服务器搭建"></a>二、代理服务器搭建</h4><p>由于国内网络环境的原因，为了顺利访问暗网，我们需要一台海外服务器，系统版本是<code>ubuntu 18.04</code>(当然其他系统也可以，只是本文会把这个版本的系统作为例子)，同时需要在这台服务器上安装<code>Tor</code>与<code>Privoxy</code>用作访问代理服务器。<br>本文的系统版本：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@536ef99cab94:/# cat /etc/issue.net</span><br><span class="line">Ubuntu 18.04.2 LTS</span><br></pre></td></tr></table></figure>
-<h5 id="2-1-整体架构"><a href="#2-1-整体架构" class="headerlink" title="2.1 整体架构"></a>2.1 整体架构</h5><h1 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-2.1.png" alt="P1"></h1><p>从图上可以看到，<code>Privoxy</code>作为一个中转代理，主要是把http协议转socks5协议，而<code>Tor</code>则负责把socks5转Tor协议。所以整个代理访问过程为：<br>1、用户输入后缀为onion的地址，由<code>Privoxy</code>暴露的8118端口访问http协议；<br>2、<code>Privoxy</code>把http协议转发给<code>Tor</code>，<code>Tor</code>获取该网站公钥进行加密，通过Tor通信链路发送信息给Tor节点，由该节点转发请求到.onion网站；</p>
+<h5 id="2-1-整体架构"><a href="#2-1-整体架构" class="headerlink" title="2.1 整体架构"></a>2.1 整体架构</h5><h1 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/20200407095703362.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""></h1><p>从图上可以看到，<code>Privoxy</code>作为一个中转代理，主要是把http协议转socks5协议，而<code>Tor</code>则负责把socks5转Tor协议。所以整个代理访问过程为：<br>1、用户输入后缀为onion的地址，由<code>Privoxy</code>暴露的8118端口访问http协议；<br>2、<code>Privoxy</code>把http协议转发给<code>Tor</code>，<code>Tor</code>获取该网站公钥进行加密，通过Tor通信链路发送信息给Tor节点，由该节点转发请求到.onion网站；</p>
 <h5 id="2-2-安装Tor"><a href="#2-2-安装Tor" class="headerlink" title="2.2 安装Tor"></a>2.2 安装Tor</h5><p>可能很多人一开始会直接执行这条命令：<code>sudo apt-get install tor</code>，从这个命令安装的<code>Tor</code>是v2版本的，不支持较新的加密算法，所以导致访问不到某些使用最新加密算法的暗网网址。<br><code>Tor v2</code>到<code>Tor v3</code>的转变主要表现为如下几点：<br>1、签名算法从SHA1/DH/RSA1024升级到SHA3/ed25519/curve25519。<br>2、改进的Tor directory protocol，安全性更高。<br>3、更好的洋葱地址，换成sha3，可以提高枚举生成一样地址的难度。<br>4、可拓展的交换协议。</p>
 <p>参考<a href="https://2019.www.torproject.org/docs/debian.html.en" target="_blank" rel="noopener">官网的安装方法</a>，安装最新版（v3版本）的<code>Tor</code>步骤如下：<br>1、在<code>/etc/apt/sources.list</code>添加如下源：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deb https://deb.torproject.org/torproject.org bionic main</span><br><span class="line">deb-src https://deb.torproject.org/torproject.org bionic main</span><br></pre></td></tr></table></figure>
@@ -242,7 +242,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">forward-socks5 / 127.0.0.1:9050 .</span><br><span class="line">listen-address 0.0.0.0:8118</span><br></pre></td></tr></table></figure>
 <p>修改后，重启服务<code>service privoxy restart</code>。</p>
 <h5 id="2-5-验证代理器是否可用"><a href="#2-5-验证代理器是否可用" class="headerlink" title="2.5 验证代理器是否可用"></a>2.5 验证代理器是否可用</h5><ul>
-<li>Tor浏览器虽然可以使用<code>meek-azure</code>来访问暗网网站，但是访问速度较慢。为了验证我们搭好的代理服务器是否可用，我们可以修改Tor浏览器的网络设置（假设我们的代理服务器ip为：11.11.11.11）：<br><img src="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-2.5.png" alt="P1"><br>设置完成后访问一个暗网网站，如果能访问成功的话即说明我们的代理服务器可用，同时访问速度也比<code>meek-azure</code>快得多。</li>
+<li>Tor浏览器虽然可以使用<code>meek-azure</code>来访问暗网网站，但是访问速度较慢。为了验证我们搭好的代理服务器是否可用，我们可以修改Tor浏览器的网络设置（假设我们的代理服务器ip为：11.11.11.11）：<br><img src="https://img-blog.csdnimg.cn/20200407095721672.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""><br>设置完成后访问一个暗网网站，如果能访问成功的话即说明我们的代理服务器可用，同时访问速度也比<code>meek-azure</code>快得多。</li>
 <li>当然，我们也可以更快捷地输入下面的命令进行测试：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ curl -x 11.11.11.11:8118 https://httpbin.org/ip</span><br><span class="line">&#123;</span><br><span class="line">  &quot;origin&quot;: &quot;178.175.132.225, 178.175.132.225&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -264,7 +264,7 @@
 <li>暗网网站的验证码一般比较简单，可以简单使用ocr技术识别，如<code>tesseract</code>;</li>
 <li>需要及时更新爬虫代码，有针对地修改反反爬虫代码。</li>
 </ol>
-<h5 id="3-3-暗网监控的爬虫架构"><a href="#3-3-暗网监控的爬虫架构" class="headerlink" title="3.3 暗网监控的爬虫架构"></a>3.3 暗网监控的爬虫架构</h5><p>Scrapy 是用 Python 实现的一个为了爬取网站数据、提取结构性数据而编写的应用框架。Scrapy 常应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。通常我们可以很简单的通过 Scrapy 框架实现一个爬虫，抓取指定网站的内容。<br>本文在Scrapy基础上结合3.2小节的反爬虫绕过方法实现了一个实时监控程序，其架构如下：<br><img src="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-3.3.png" alt="P1"></p>
+<h5 id="3-3-暗网监控的爬虫架构"><a href="#3-3-暗网监控的爬虫架构" class="headerlink" title="3.3 暗网监控的爬虫架构"></a>3.3 暗网监控的爬虫架构</h5><p>Scrapy 是用 Python 实现的一个为了爬取网站数据、提取结构性数据而编写的应用框架。Scrapy 常应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中。通常我们可以很简单的通过 Scrapy 框架实现一个爬虫，抓取指定网站的内容。<br>本文在Scrapy基础上结合3.2小节的反爬虫绕过方法实现了一个实时监控程序，其架构如下：<br><img src="https://img-blog.csdnimg.cn/20200407095743314.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""></p>
 <h5 id="3-4-监控程序的具体实现"><a href="#3-4-监控程序的具体实现" class="headerlink" title="3.4 监控程序的具体实现"></a>3.4 监控程序的具体实现</h5><p>本文的监控程序是同时监控几个常见的暗网网站，由于篇幅有限，故只拿某暗网网站作为例子。<br>Scrapy代理设置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">class DarkwebSpiderDownloaderMiddleware(object):</span><br><span class="line"></span><br><span class="line">    def process_request(self, request, spider):</span><br><span class="line">        request.meta[&apos;proxy&apos;] = &apos;http://11.11.11.11:8118&apos;</span><br></pre></td></tr></table></figure>
 <p>多账号登录核心代码：</p>
@@ -279,7 +279,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def send_html_email(title, html, content, mailto, cc=None):</span><br><span class="line">html_content = render_to_string(html, content)</span><br><span class="line">send_mail = settings.EMAIL_TO.split(&apos;,&apos;) if mailto == &apos;&apos; else settings.EMAIL_TO</span><br><span class="line"></span><br><span class="line">msg = EmailMultiAlternatives(title, html_content,</span><br><span class="line">                             settings.EMAIL_LUCKY_NAME +    &apos;&lt;&apos; + settings.EMAIL_HOST_USER + &apos;&gt;&apos;, send_mail, cc=cc)</span><br><span class="line">msg.attach_alternative(html_content, &quot;text/html&quot;)</span><br><span class="line">msg.send()</span><br></pre></td></tr></table></figure>
 <h4 id="四、可视化爬虫数据"><a href="#四、可视化爬虫数据" class="headerlink" title="四、可视化爬虫数据"></a>四、可视化爬虫数据</h4><ul>
 <li><code>Grafana</code>是一个跨平台的开源的度量分析和可视化监控工具，可以通过将采集的数据查询然后可视化的展示，并及时通知，4.3以后的版本已支持MySQL数据源，因此读者可以使用<code>Grafana</code>来可视化同时配置邮件告警，具体操作方法还请自行查阅。</li>
-<li>但是本文的暗网实时监控程序接入了安全管理平台，故采用自研的管理页面，可以更方便地搜索与查看暗网爬虫数据，大致效果如下:<br><img src="https://raw.githubusercontent.com/shystartree/blogpic/master/darkweb/dw-4.png" alt="P1"></li>
+<li>但是本文的暗网实时监控程序接入了安全管理平台，故采用自研的管理页面，可以更方便地搜索与查看暗网爬虫数据，大致效果如下:<br><img src="https://img-blog.csdnimg.cn/20200407095758508.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""></li>
 </ul>
 <h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>暗网监控对于大多数人是一个神秘的存在，本文一步一步地带领读者揭开这层神秘的面纱，从搭建代理服务器开始，在解释常见的反爬策略后，讲解了如何从零开发一个暗网网站监控程序，最后介绍了<code>Grafana</code>可视化监控工具，可以结合监控程序使用。</p>
 <p>p.s.特别鸣谢<strong>y1r0nz</strong>大佬的指导，给了一些非常好的实施建议。</p>
@@ -595,10 +595,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">安全</a>
               </li>
              
@@ -611,6 +607,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">暗网</a>
               </li>
              
@@ -619,11 +619,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">elk</a>
+                <a href="javascript:void(0)" class="js-tag color5">json</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">json</a>
+                <a href="javascript:void(0)" class="js-tag color4">elk</a>
               </li>
              
               <li class="article-tag-list-item">

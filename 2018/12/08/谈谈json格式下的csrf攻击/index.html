@@ -13,11 +13,11 @@
 <meta property="og:title" content="谈谈json格式下的csrf攻击">
 <meta property="og:url" content="http://dayun.shystartree.online/2018/12/08/谈谈json格式下的csrf攻击/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/WX20181210-182200%402x.png">
-<meta property="og:updated_time" content="2019-01-14T08:29:54.606Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200407095351925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-04-07T01:56:36.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈json格式下的csrf攻击">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/shystartree/blogpic/master/WX20181210-182200%402x.png">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200407095351925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -190,7 +190,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/shystartree/blogpic/master/WX20181210-182200%402x.png" alt="P1"></h1><a id="more"></a>
+        <h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/20200407095351925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""></h1><a id="more"></a>
 <h4 id="一、csrf漏洞简介"><a href="#一、csrf漏洞简介" class="headerlink" title="一、csrf漏洞简介"></a>一、csrf漏洞简介</h4><p>csrf漏洞的成因就是网站的cookie在浏览器中不会过期，只要不关闭浏览器或者退出登录，那以后只要是访问这个网站，都会默认你已经登录的状态。而在这个期间，攻击者发送了构造好的csrf脚本或包含csrf脚本的链接，可能会执行一些用户不想做的功能（比如是添加账号等）。这个操作不是用户真正想要执行的。</p>
 <p>在post标准化格式（accounts=test&amp;password=aaa）的表单页面中，在没有csrf防护的前提下，我们能很轻松地构造页面来实现攻击，但是在json格式下，csrf攻击怎么实现呢？</p>
 <p>那我们为何不能使用这个常规构造的PoC来利用JSON端点中的CSRF呢？原因如下：<br>1、POSTbody需要以JSON格式发送，而这种格式如果用HTML表单元素来构建的话会比较麻烦。<br>2、Content-Type头需要设置为application/json。设置自定义Header需要使用XMLHttpRequests，而它还会向服务器端发送OPTIONS预检请求。</p>
@@ -521,10 +521,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">安全</a>
               </li>
              
@@ -537,6 +533,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">暗网</a>
               </li>
              
@@ -545,11 +545,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">elk</a>
+                <a href="javascript:void(0)" class="js-tag color5">json</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">json</a>
+                <a href="javascript:void(0)" class="js-tag color4">elk</a>
               </li>
              
               <li class="article-tag-list-item">
