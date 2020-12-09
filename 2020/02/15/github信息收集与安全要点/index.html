@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://dayun.shystartree.online/2020/02/15/github信息收集与安全要点/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
 <meta property="og:description" content="1、Github信息收集对于白帽子来说，Github是一个获取攻击目标信息的好资源，在上面通过搜索公司关键字，可以获取一些关于公司的信息。因为总会有一些开发者的疏忽大意，将公司的源码上传到Github，其中可能含有一些密钥、密码之类的敏感信息。">
-<meta property="og:updated_time" content="2020-12-09T08:35:22.360Z">
+<meta property="og:updated_time" content="2020-12-09T09:31:51.001Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="github信息收集与安全要点">
 <meta name="twitter:description" content="1、Github信息收集对于白帽子来说，Github是一个获取攻击目标信息的好资源，在上面通过搜索公司关键字，可以获取一些关于公司的信息。因为总会有一些开发者的疏忽大意，将公司的源码上传到Github，其中可能含有一些密钥、密码之类的敏感信息。">
@@ -219,7 +219,6 @@
 <li>9.创建新项目时就考虑到安全性</li>
 <li>10.审核任何引入到GitHub的代码</li>
 </ul>
-<p>把log.txt、post.php、index.html页面放到apache的/var/www/html中，开启apache服务，即可。</p>
 <h5 id="2-1-不要将凭证作为代码-配置存储在GitHub中"><a href="#2-1-不要将凭证作为代码-配置存储在GitHub中" class="headerlink" title="2.1 不要将凭证作为代码/配置存储在GitHub中"></a>2.1 不要将凭证作为代码/配置存储在GitHub中</h5><p> 在 github 上执行一次搜索删除密码操作（<a href="https://github.com/search?q=removed+password&amp;type=Commits），" target="_blank" rel="noopener">https://github.com/search?q=removed+password&amp;type=Commits），</a><br>可以发现在 repo 中存储密码的情况是如此普遍，简单的搜索就返回来47万次 commit 记录，这还没有覆盖到没有填写详细的commit 信息，或者已经通过删除历史记录来掩饰活动的情况。总体而言这是由来已久的安全隐患。工具使用者应当遵循最佳实践来防止将敏感数据放置到代码库中。<br>    对于企业内部的存量代码应当也有手段去解决存量的代码中的大量密码。通过工单肯定是不现实的。有一些有用的本地工具比如git-secrets，可以通过在 pre-commit 阶段对 Git 进行 hook 来执行静态分析，以确保不会将任何密码或敏感信息 push 到 GitHub 仓库中。如果该工具配置的正则表达式匹配到任何敏感信息就会拒绝这一次 commit。这样可能会让 push 阶段延时一些，但是还是值得去做的。<br>    还可以在 CI 和 CD 的流水线中使用 git-secrets 之类的工具，以便在代码或配置文件中发现敏感信息时就主动终止构建活动。在团队范围内推行这类的规则是检测目前开发人员工作流程中的 “坏习惯” 的好办法。唯一正确的做法是使用现有 CI/CD 流水线工具如 Jenkins 或 TeamCity 来设置环境变量来保存或者传递敏感信息。当然还可以使用 Vault 之类的工具来帮助进行生产环境的密码管理。最后还可以考虑使用身份和用户管理类的工具链 - 如Keycloak（当前由 Red Hat 的的一些开发人员维护）。<br>    应当在早期就尝试尽可能多使用多种手段去避免将凭据引入到仓库中，但是不可避免有些敏感信息依然有可能会被带入（工具对片段代码的漏报）。隐私应该考虑定期审核代码仓库，利用 GitRob 或 truffleHog 等工具，这两个工具都可以全量扫描代码库，通过模式匹配搜索敏感信息。另外一种好方法是对每次的 git diff 阶段建立 es 索引，不过工作量相对较大。</p>
 <h5 id="2-2-删除文件中的敏感数据和GitHub历史记录"><a href="#2-2-删除文件中的敏感数据和GitHub历史记录" class="headerlink" title="2.2 删除文件中的敏感数据和GitHub历史记录"></a>2.2 删除文件中的敏感数据和GitHub历史记录</h5><p>如果已经在 GitHub 仓库中发现敏感数据就需要做一些应急来处理。第一步是需要将曾经过公开的 token 令牌和密码失效。一旦一个口令在互联网上公开，应该假设它已经被掌握在攻击者的手中，并做出相应动作。<br>当然，肯定还需要从仓库中删除敏感数据，但是不要忘记 GitHub 非常擅长保存所有 commit 的完整历史记录。包括列出敏感信息的修改日志。在从 repo 中删除敏感数据时，清除 GitHub 历史记录非常重要。有关更多信息，参考 <a href="https://help.github.com/en/articles/removing-sensitive-data-from-a-repository" target="_blank" rel="noopener">https://help.github.com/en/articles/removing-sensitive-data-from-a-repository</a> 。总是有通过git修改了密码，但是commit记录还存在的情况。</p>
 <h5 id="2-3-限制访问控制"><a href="#2-3-限制访问控制" class="headerlink" title="2.3 限制访问控制"></a>2.3 限制访问控制</h5><p>我们可以一直专注于分析更复杂的攻击手段，但总是对一些最简单的事情上却失败得很惨。例如只需要一个开发人员在便利贴上留下他们的密码挂在电脑显示器上让攻击者访问。无论是在 GitHub 平台上，还是在一般场景下都应当遵守基本的安全设置。要求贡献者（contributors）遵循以下基本实践:</p>
@@ -547,11 +546,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
+                <a href="javascript:void(0)" class="js-tag color5">社会工程</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">社会工程</a>
+                <a href="javascript:void(0)" class="js-tag color2">dnslog</a>
               </li>
              
               <li class="article-tag-list-item">
