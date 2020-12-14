@@ -8,17 +8,16 @@
   <link rel="dns-prefetch" href="http://dayun.shystartree.online">
   <title>github信息收集与安全要点 | qingyu&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、Github信息收集对于白帽子来说，Github是一个获取攻击目标信息的好资源，在上面通过搜索公司关键字，可以获取一些关于公司的信息。因为总会有一些开发者的疏忽大意，将公司的源码上传到Github，其中可能含有一些密钥、密码之类的敏感信息。">
-<meta name="keywords" content="安全,信息收集">
+  <meta name="keywords" content="安全,信息收集">
 <meta property="og:type" content="article">
 <meta property="og:title" content="github信息收集与安全要点">
 <meta property="og:url" content="http://dayun.shystartree.online/2020/02/15/github信息收集与安全要点/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:description" content="1、Github信息收集对于白帽子来说，Github是一个获取攻击目标信息的好资源，在上面通过搜索公司关键字，可以获取一些关于公司的信息。因为总会有一些开发者的疏忽大意，将公司的源码上传到Github，其中可能含有一些密钥、密码之类的敏感信息。">
-<meta property="og:updated_time" content="2020-12-09T15:20:56.763Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201211144422622.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-12-11T06:49:27.782Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="github信息收集与安全要点">
-<meta name="twitter:description" content="1、Github信息收集对于白帽子来说，Github是一个获取攻击目标信息的好资源，在上面通过搜索公司关键字，可以获取一些关于公司的信息。因为总会有一些开发者的疏忽大意，将公司的源码上传到Github，其中可能含有一些密钥、密码之类的敏感信息。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201211144422622.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -191,7 +190,9 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="1、Github信息收集"><a href="#1、Github信息收集" class="headerlink" title="1、Github信息收集"></a>1、Github信息收集</h4><p>对于白帽子来说，Github是一个获取攻击目标信息的好资源，在上面通过搜索公司关键字，可以获取一些关于公司的信息。因为总会有一些开发者的疏忽大意，将公司的源码上传到Github，其中可能含有一些密钥、密码之类的敏感信息。<br><a id="more"></a></p>
+        <p><img src="https://img-blog.csdnimg.cn/20201211144422622.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""></p>
+<a id="more"></a>
+<h4 id="1、Github信息收集"><a href="#1、Github信息收集" class="headerlink" title="1、Github信息收集"></a>1、Github信息收集</h4><p>对于白帽子来说，Github是一个获取攻击目标信息的好资源，在上面通过搜索公司关键字，可以获取一些关于公司的信息。因为总会有一些开发者的疏忽大意，将公司的源码上传到Github，其中可能含有一些密钥、密码之类的敏感信息。</p>
 <h5 id="1-1-手工搜索"><a href="#1-1-手工搜索" class="headerlink" title="1.1 手工搜索"></a>1.1 手工搜索</h5><p>思路是：公司特征+关键字（company_name pass）</p>
 <p>搜索敏感密钥和密码的关键字列表可参考：<a href="https://github.com/random-robbie/keywords/blob/master/keywords.txt" target="_blank" rel="noopener">random-robbie/keywords</a> </p>
 <h6 id="1-1-1-google-github"><a href="#1-1-1-google-github" class="headerlink" title="1.1.1 google+github"></a>1.1.1 google+github</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">邮箱配置信息泄露</span><br><span class="line">site:github.com smtp password</span><br><span class="line">site:github.com smtp @126.com</span><br><span class="line">site:github.com String password smtp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">数据库信息泄露</span><br><span class="line">site:github.com  root password</span><br><span class="line">site:github.com  sa password</span><br><span class="line">site:github.com  User ID=&apos;sa&apos;;Password</span><br><span class="line"></span><br><span class="line">svn信息泄露</span><br><span class="line">site:github.com  svn</span><br><span class="line">site:github.com  svn password</span><br><span class="line">site:github.com  svn username</span><br><span class="line">site:github.com  svn username password</span><br><span class="line"></span><br><span class="line">数据库备份文件</span><br><span class="line">site:github.com  inurl:sql</span><br><span class="line"></span><br><span class="line">综合信息泄露</span><br><span class="line">site:github.com  password</span><br><span class="line">site:github.com  ftp ftppassword</span><br><span class="line">site:github.com  密码</span><br><span class="line">site:github.com  内部</span><br><span class="line">等</span><br></pre></td></tr></table></figure>
@@ -389,6 +390,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2020/04/15/burpsuite信息收集插件logger++使用方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          使用burpsuite插件logger++进行信息收集
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/06/18/企业威胁情报平台建设之暗网监控/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">企业威胁情报平台建设之暗网监控</div>
@@ -549,11 +559,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随记</a>
+                <a href="javascript:void(0)" class="js-tag color3">安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">安全</a>
+                <a href="javascript:void(0)" class="js-tag color5">信息收集</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -578,10 +592,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">elk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">信息收集</a>
               </li>
              
               <li class="article-tag-list-item">
