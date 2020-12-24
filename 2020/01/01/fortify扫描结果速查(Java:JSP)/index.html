@@ -6,18 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://dayun.shystartree.online">
-  <title>fortify扫描结果速查(Java/JSP)-API误用 | qingyu&#39;s blog</title>
+  <title>fortify扫描结果速查(Java/JSP) | qingyu&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="fortify扫描结果速查(Java/JSP)-API误用，篇幅较大，推荐使用ctrl+F查找~~~">
 <meta name="keywords" content="安全,fortify速查">
 <meta property="og:type" content="article">
-<meta property="og:title" content="fortify扫描结果速查(Java&#x2F;JSP)-API误用">
-<meta property="og:url" content="http://dayun.shystartree.online/2020/01/01/fortify扫描结果速查(Java:JSP)-总/index.html">
+<meta property="og:title" content="fortify扫描结果速查(Java&#x2F;JSP)">
+<meta property="og:url" content="http://dayun.shystartree.online/2020/01/01/fortify扫描结果速查(Java:JSP)/index.html">
 <meta property="og:site_name" content="qingyu&#39;s blog">
 <meta property="og:description" content="fortify扫描结果速查(Java/JSP)-API误用，篇幅较大，推荐使用ctrl+F查找~~~">
-<meta property="og:updated_time" content="2020-12-24T09:05:34.708Z">
+<meta property="og:updated_time" content="2020-12-24T09:55:54.380Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fortify扫描结果速查(Java&#x2F;JSP)-API误用">
+<meta name="twitter:title" content="fortify扫描结果速查(Java&#x2F;JSP)">
 <meta name="twitter:description" content="fortify扫描结果速查(Java/JSP)-API误用，篇幅较大，推荐使用ctrl+F查找~~~">
   
     <link rel="alternative" href="/atom.xml" title="qingyu&#39;s blog" type="application/atom+xml">
@@ -160,14 +160,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-fortify扫描结果速查(Java:JSP)-总" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-fortify扫描结果速查(Java:JSP)" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      fortify扫描结果速查(Java/JSP)-API误用
+      fortify扫描结果速查(Java/JSP)
     </h1>
   
 
@@ -180,7 +180,7 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/01/01/fortify扫描结果速查(Java:JSP)-总/" class="archive-article-date">
+<a href="/2020/01/01/fortify扫描结果速查(Java:JSP)/" class="archive-article-date">
   	<time datetime="2019-12-31T17:01:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-01</time>
 </a>
         
@@ -220,6 +220,17 @@
 <h2 id="Java-JSP"><a href="#Java-JSP" class="headerlink" title="Java/JSP"></a>Java/JSP</h2><p>API误用<br>API 是调用方与被调用方之间的合约。最常见的 API 滥用形式是由于调用方未能履行本合约而造成的。例如，如果程序未能在调用 chroot() 之后调用 chdir()，则违反了合约针对如何以安全的方式更改活动根目录的规定。库滥用的另一个绝佳示例是希望被调用方将可信 DNS 信息返回给调用方。在这种情况下，调用方通过对被调用方的行为做出某些假设（即返回值可用于身份验证）而滥用被调用方 API。此外，一方还可以从另一方违反调用方和被调用方间的合约。例如，如果编码器将 SecureRandom 归入子类并返回非随机值，则违反了合约。</p>
 <p>代码质量<br>代码质量低会导致不可预知的行为。从用户角度来看，这种情况通常表现为可用性差。对于攻击者而言，它提供了以各种意想不到的方式为系统施压的机会。</p>
 <p>封装<br>封装是指划定明确的边界。在 Web 浏览器中，这可能意味着确保您的移动代码不会被其他移动代码滥用。在服务器上，它可能意味着对经过验证的数据和未经验证的数据、一个用户的数据和另一用户的数据或对用户可以查看的数据和不能查看的数据进行区分。</p>
+<p>环境配置</p>
+<p>这部分包含源代码以外的所有内容，但对于即将创建的产品的安全仍至关重要。因为此分类中涵盖的问题与源代码没有直接关系，所以我们将其与其他分类分开。</p>
+<p>异常处理</p>
+<p>错误和错误处理代表 API 的一个类。与错误处理相关的错误十分常见，它们单独需要一个特殊的界。对于“API 滥用”，有两种方式可以引入与错误相关的安全漏洞：最常用的方式是不当处理错误（或根本不处理）。第二种方式是制造提供太多信息（给潜在的攻击者）或难以处理的错误。</p>
+<p>输入验证与展示问题</p>
+<p>输入验证和表示问题是由于元字符、备选编码和数值表示而引起的。安全问题是由于信任输入而引起的。这些问题包括：“缓冲区溢出”、“跨站点脚本”攻击、“SQL 注入”和许多其他问题。</p>
+<p>安全特性</p>
+<p>软件安全不是安全软件。在此处，我们讨论类似于身份验证、访问控制、机密性、加密和权限管理之类的主题。</p>
+<p>时间和状态</p>
+<p>分布式计算与时间和状态有关。即，为了使多个组件进行通信，必须共享状态，而这一切都需要时间。</p>
+<p>大部分程序员会将其工作人格化。他们想象一个控制线程以他们会采用的相同方式执行整个程序（如果他们需要自己完成任务的话）。但是，现代计算机可以在不同的任务之间迅速切换，并且是在多核、多 CPU 或分布式系统中进行切换，两个事件可以在完全相同的时间发生。对于程序如何执行，程序员的模型和实际情况之间存在差距，匆忙之中缺陷便会趁虚而入。这些缺陷与线程、进程、时间和信息之间的意外交互相关。这些交互通过共享状态实现：信号、变量、文件系统以及基本上任何可以存储信息的介质。</p>
 <h3 id="API误用"><a href="#API误用" class="headerlink" title="API误用"></a>API误用</h3><p>API 是调用方与被调用方之间的合约。最常见的 API 滥用形式是由于调用方未能履行本合约而造成的。例如，如果程序未能在调用 chroot() 之后调用 chdir()，则违反了合约针对如何以安全的方式更改活动根目录的规定。库滥用的另一个绝佳示例是希望被调用方将可信 DNS 信息返回给调用方。在这种情况下，调用方通过对被调用方的行为做出某些假设（即返回值可用于身份验证）而滥用被调用方 API。此外，一方还可以从另一方违反调用方和被调用方间的合约。例如，如果编码器将 SecureRandom 归入子类并返回非随机值，则违反了合约。<br>ADF Faces Bad Practices: unsecure Attribute</p>
 <p>Castor Bad Practices: Query Mode Not Read-Only</p>
 <p>Castor Bad Practices: Unspecified Query Mode</p>
@@ -3937,7 +3948,7 @@ public final boolean isValid(){
   <div class="declare">
   <br><br>
   <strong>本文链接：</strong>
-  http://dayun.shystartree.online/2020/01/01/fortify扫描结果速查(Java:JSP)-总/
+  http://dayun.shystartree.online/2020/01/01/fortify扫描结果速查(Java:JSP)/
   <br>
   <strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="/img/licensee.png"/></a>许可协议。欢迎转载，但转载请注明来自qingyu’s blog，并保持转载后文章内容的完整，本人保留所有版权相关权利。
   
@@ -4049,7 +4060,7 @@ public final boolean isValid(){
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://dayun.shystartree.online/2020/01/01/fortify扫描结果速查(Java:JSP)-总/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://dayun.shystartree.online/2020/01/01/fortify扫描结果速查(Java:JSP)/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -4063,18 +4074,18 @@ public final boolean isValid(){
   
 <nav id="article-nav">
   
-    <a href="/2020/01/01/fortify扫描结果速查(Java:JSP)-API误用/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/03/27/使用github进行信息收集与安全防御/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          fortify扫描结果速查(Java/JSP)-API误用
+          使用github进行信息收集与安全防御
         
       </div>
     </a>
   
   
-    <a href="/2020/01/01/fortify扫描结果速查(Java:JSP)-封装/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">fortify扫描结果速查(Java/JSP)-封装</div>
+    <a href="/2019/06/18/企业威胁情报平台建设之暗网监控/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">企业威胁情报平台建设之暗网监控</div>
       <i class="icon-circle-right"></i>
     </a>
   
