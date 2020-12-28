@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="qingyu&#39;s blog">
 <meta property="og:description" content="fortify扫描结果速查(PHP)，篇幅十分大，推荐使用ctrl+F查找~~~">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20201226182427732.jpg">
-<meta property="og:updated_time" content="2020-12-28T09:08:13.907Z">
+<meta property="og:updated_time" content="2020-12-28T09:12:12.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fortify扫描结果速查(PHP)">
 <meta name="twitter:description" content="fortify扫描结果速查(PHP)，篇幅十分大，推荐使用ctrl+F查找~~~">
@@ -1549,7 +1549,7 @@
 <p>服务器端脚本：</p>
 <p>－ 如果服务器端脚本会将输入中的感叹号 (!) 转换成输出中的双引号 (“)，则可能需要对此进行更多过滤。 </p>
 <p>其他可能出现的情况：</p>
-<p>－ 如果攻击者以 UTF-7 格式提交了请求，则特殊字符“&lt;”可能会显示为“+ADw-”，并可能会绕过过滤。如果输出包含在没有确切指定编码格式的网页中，某些浏览器就会设法根据内容自动识别编码（此处采用 UTF-7 格式）。</p>
+<p>－ 如果攻击者以 UTF-7 格式提交了请求，则特殊字符<code>“&lt;”</code>可能会显示为<code>“+ADw-”</code>，并可能会绕过过滤。如果输出包含在没有确切指定编码格式的网页中，某些浏览器就会设法根据内容自动识别编码（此处采用 UTF-7 格式）。</p>
 <p>在应用程序中确定针对 XSS 攻击执行验证的正确要点，以及验证过程中要考虑的特殊字符之后，下一个难点就是确定验证过程中处理各种特殊字符的方式。如果应用程序认定某些特殊字符为无效输入，那么您可以拒绝任何带有这些无效特殊字符的输入。第二种选择就是采用过滤手段来删除这些特殊字符。然而，过滤的负面作用在于，过滤内容的显示将发生改变。在需要完整显示输入内容的情况下，过滤的这种负面作用可能是无法接受的。</p>
 <p>如果必须接受带有特殊字符的输入，并将其准确地显示出来，验证机制一定要对所有特殊字符进行编码，以便删除其具有的含义。官方的 HTML 规范 [2] 提供了特殊字符对应的 ISO 8859-1 编码值的完整列表。</p>
 <p>许多应用程序服务器都试图避免应用程序出现 Cross-Site Scripting 漏洞，具体做法是为负责设置特定 HTTP 响应内容的函数提供各种实现方式，以检验是否存在进行 Cross-Site Scripting 攻击必需的字符。不要依赖运行应用程序的服务器，以此确保该应用程序的安全。开发了某个应用程序后，并不能保证在其生命周期中它会在哪些应用程序服务器中运行。由于标准和已知盗取方式的演变，我们不能保证应用程序服务器也会保持同步。</p>
@@ -1644,7 +1644,7 @@
 <p>服务器端脚本：</p>
 <p>－ 如果服务器端脚本会将输入中的感叹号 (!) 转换成输出中的双引号 (“)，则可能需要对此进行更多过滤。 </p>
 <p>其他可能出现的情况：</p>
-<p>－ 如果攻击者以 UTF-7 格式提交了请求，则特殊字符“&lt;”可能会显示为“+ADw-”，并可能会绕过过滤。如果输出包含在没有确切指定编码格式的网页中，某些浏览器就会设法根据内容自动识别编码（此处采用 UTF-7 格式）。</p>
+<p>－ 如果攻击者以 UTF-7 格式提交了请求，则特殊字符<code>“&lt;”</code>可能会显示为<code>“+ADw-”</code>，并可能会绕过过滤。如果输出包含在没有确切指定编码格式的网页中，某些浏览器就会设法根据内容自动识别编码（此处采用 UTF-7 格式）。</p>
 <p>在应用程序中确定针对 XSS 攻击执行验证的正确要点，以及验证过程中要考虑的特殊字符之后，下一个难点就是确定验证过程中处理各种特殊字符的方式。如果应用程序认定某些特殊字符为无效输入，那么您可以拒绝任何带有这些无效特殊字符的输入。第二种选择就是采用过滤手段来删除这些特殊字符。然而，过滤的负面作用在于，过滤内容的显示将发生改变。在需要完整显示输入内容的情况下，过滤的这种负面作用可能是无法接受的。</p>
 <p>如果必须接受带有特殊字符的输入，并将其准确地显示出来，验证机制一定要对所有特殊字符进行编码，以便删除其具有的含义。官方的 HTML 规范 [2] 提供了特殊字符对应的 ISO 8859-1 编码值的完整列表。</p>
 <p>许多应用程序服务器都试图避免应用程序出现 Cross-Site Scripting 漏洞，具体做法是为负责设置特定 HTTP 响应内容的函数提供各种实现方式，以检验是否存在进行 Cross-Site Scripting 攻击必需的字符。不要依赖运行应用程序的服务器，以此确保该应用程序的安全。开发了某个应用程序后，并不能保证在其生命周期中它会在哪些应用程序服务器中运行。由于标准和已知盗取方式的演变，我们不能保证应用程序服务器也会保持同步。</p>
@@ -2760,7 +2760,7 @@ ao-&gt;doAction(request);
 <p>echo $doc-&gt;testing;</p>
 <p>?&gt;</p>
 <p>…</p>
-<figure class="highlight plain"><figcaption><span>XML 传递到Example 2中的代码：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">现在假设攻击者将以下 XML 传递到Example 2中的代码：</span><br></pre></td></tr></table></figure>
 <p>&lt;?xml version=”1.0” encoding=”ISO-8859-1”?&gt;</p>
 <p> &lt;!DOCTYPE foo [</p>
 <p>   &lt;!ELEMENT foo ANY &gt;</p>
@@ -2839,7 +2839,7 @@ ao-&gt;doAction(request);
 
 <p></p></xsl:template><p></p>
 <p></p></xsl:stylesheet><p></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在处理 XSL 样式表时，&lt;script&gt; 会进入受害者的浏览器，从而能够实施 cross-site scripting 攻击。</span><br><span class="line"></span><br><span class="line">2. 读取服务器文件系统中的任意文件：</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在处理 XSL 样式表时，`&lt;script&gt; `会进入受害者的浏览器，从而能够实施 cross-site scripting 攻击。</span><br><span class="line"></span><br><span class="line">2. 读取服务器文件系统中的任意文件：</span><br></pre></td></tr></table></figure>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 
 <xsl:template match="/">
