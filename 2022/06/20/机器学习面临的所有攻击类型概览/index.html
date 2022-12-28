@@ -8,13 +8,12 @@
   <link rel="dns-prefetch" href="http://dayun.shystartree.online">
   <title>机器学习面临的所有攻击类型概览 | Qingyu&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这篇博文讲述了攻击AI系统的一些技术，以及应该如何防御它们。总的来说，针对分类器的攻击可以分为以下三种：  对抗输入（Adversarial inputs）：这是经过精心设计过的输入，其目的就是为了迷惑分类器以逃过检测。对抗输入包括逃避杀毒软件的恶意文件以及躲避垃圾过滤的邮件。  数据攻击（Data poisoning）：这是指在分类器中输入训练对抗数据。最常见的攻击类型是模型扭曲（model s">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习面临的所有攻击类型概览">
 <meta property="og:url" content="http://dayun.shystartree.online/2022/06/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E9%9D%A2%E4%B8%B4%E7%9A%84%E6%89%80%E6%9C%89%E6%94%BB%E5%87%BB%E7%B1%BB%E5%9E%8B%E6%A6%82%E8%A7%88/index.html">
 <meta property="og:site_name" content="Qingyu&#39;s blog">
-<meta property="og:description" content="这篇博文讲述了攻击AI系统的一些技术，以及应该如何防御它们。总的来说，针对分类器的攻击可以分为以下三种：  对抗输入（Adversarial inputs）：这是经过精心设计过的输入，其目的就是为了迷惑分类器以逃过检测。对抗输入包括逃避杀毒软件的恶意文件以及躲避垃圾过滤的邮件。  数据攻击（Data poisoning）：这是指在分类器中输入训练对抗数据。最常见的攻击类型是模型扭曲（model s">
 <meta property="og:locale">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/2d711340261c04abc3a9d79d84ebbd0f.jpeg">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/61b18d03bd73549a7e3dccca90693240.jpeg">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d86b9103aeba31e481b17d49c4236c48.jpeg">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/fd449bd1af34da8f1a5170f091bcbe8d.jpeg">
@@ -25,12 +24,12 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4b3819f14ee4205aa338af50a75d35da.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5785e9af55cc1cc47268b6eac671056d.png">
 <meta property="article:published_time" content="2022-06-20T12:22:10.000Z">
-<meta property="article:modified_time" content="2022-12-27T15:30:35.000Z">
+<meta property="article:modified_time" content="2022-12-28T13:11:30.000Z">
 <meta property="article:author" content="QingYu">
 <meta property="article:tag" content="安全">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/61b18d03bd73549a7e3dccca90693240.jpeg">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/2d711340261c04abc3a9d79d84ebbd0f.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="Qingyu&#39;s blog" type="application/atom+xml">
   
@@ -203,63 +202,39 @@
     
     <!-- 目录内容 -->
 
-    <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
-          <span class="btn-bg"></span>
-          <span class="btn-text">文章导航</span>
-          </p>
-  <div id="toc-article" class="toc-article">
-      <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
-    <strong class="toc-title">文章目录</strong>
-           <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%8A%97%E8%BE%93%E5%85%A5"><span class="toc-number">1.</span> <span class="toc-text">对抗输入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E5%BC%82%E8%BE%93%E5%85%A5"><span class="toc-number">0.1.</span> <span class="toc-text">变异输入</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-1"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-2"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-3"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-4"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-5"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-6"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E6%97%A5%E8%BE%93%E5%85%A5"><span class="toc-number">0.1.</span> <span class="toc-text">零日输入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%94%BB%E5%87%BB"><span class="toc-number">1.</span> <span class="toc-text">数据攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E6%9B%B4%E6%94%B9%EF%BC%88Model-skewing%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">模型更改（Model skewing）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-7"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E9%A6%88%E6%AD%A6%E5%99%A8%E5%8C%96"><span class="toc-number">0.1.</span> <span class="toc-text">反馈武器化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%AA%83%E5%8F%96%E6%94%BB%E5%87%BB"><span class="toc-number">1.</span> <span class="toc-text">模型窃取攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-8"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">1.</span> <span class="toc-text">结语</span></a></li></ol>
-         </div>
-   <script type="text/javascript">
-  function showToc(){
-    var toc_article = document.getElementById("toc-article");
-    var show_toc_btn = document.getElementById("show-toc-btn");
-    toc_article.setAttribute("style","display:block");
-    show_toc_btn.setAttribute("style","display:none");
-    };
-  function showBtn(){
-    var toc_article = document.getElementById("toc-article");
-    var show_toc_btn = document.getElementById("show-toc-btn");
-    toc_article.setAttribute("style","display:none");
-    show_toc_btn.setAttribute("style","display:block");
-    };
-   </script>
-      
 <!-- 目录内容结束 -->
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这篇博文讲述了攻击AI系统的一些技术，以及应该如何防御它们。总的来说，针对分类器的攻击可以分为以下三种：</p>
+        <h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/2d711340261c04abc3a9d79d84ebbd0f.jpeg" alt=""></h1><span id="more"></span>
+<p>这篇博文讲述了攻击AI系统的一些技术，以及应该如何防御它们。总的来说，针对分类器的攻击可以分为以下三种：</p>
 <ul>
 <li><p>对抗输入（Adversarial inputs）：这是经过精心设计过的输入，其目的就是为了迷惑分类器以逃过检测。对抗输入包括逃避杀毒软件的恶意文件以及躲避垃圾过滤的邮件。</p>
 </li>
 <li><p>数据攻击（Data poisoning）：这是指在分类器中输入训练对抗数据。最常见的攻击类型是模型扭曲（model skewing），其中攻击者试图污染训练数据，让分类器无法识别哪些是好的数据。我们观察到的另一种攻击是“将反馈作为武器（feedback weaponization）”，它会攻击反馈机制，从而让系统将好的内容错误地识别成不良内容。</p>
 </li>
 <li><p>模型窃取技术（Model stealing）：这类技术通过黑箱探测器复制模型或获取训练数据（所以称为“偷”）。这种技术可以用在窃取预测市场库存的模型和垃圾过滤模型上，以进行更好的优化。</p>
-<span id="more"></span>
 </li>
 </ul>
 <p>这篇文章将对上述三种攻击方法逐一进行详解，同时会提供具体的案例并讨论具体的应对方法。本文面向所有对用AI进行反攻击感兴趣的读者，关注的重点是进行清晰的总结，而不详细说明其中的技术细节。希望这篇文章能对你有所启发。</p>
 <h2 id="对抗输入"><a href="#对抗输入" class="headerlink" title="对抗输入"></a>对抗输入</h2><p>对抗样本经常会向分类器输入新的元素以“瞒天过海”，这样的输入被称作“对抗输入”，因为它们很明显是为了逃避分类器的。</p>
-<h1 id=""><a href="#" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/61b18d03bd73549a7e3dccca90693240.jpeg" alt=""></h1><p>下面是一个具体的有关对抗输入的例子：许多年前，一位聪明的垃圾邮件制造者发现，如果在一封邮件里出现了很多次同样的复合附件，Gmail只会在屏幕上方显示最后一个附件。他利用这一漏洞，在附件中加入了许多可靠域，以逃过检测。这种攻击是“关键词堆砌”的一种变体。</p>
+<h1 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/61b18d03bd73549a7e3dccca90693240.jpeg" alt=""></h1><p>下面是一个具体的有关对抗输入的例子：许多年前，一位聪明的垃圾邮件制造者发现，如果在一封邮件里出现了很多次同样的复合附件，Gmail只会在屏幕上方显示最后一个附件。他利用这一漏洞，在附件中加入了许多可靠域，以逃过检测。这种攻击是“关键词堆砌”的一种变体。</p>
 <p>总的来说，分类器面临两种对抗输入：首先是变异输入（mutated inputs），它是经过改造逃避分类器的一种攻击方式。另一种是零日输入（zero-day inputs），指的是输入全新的数据。下面就让我们详细讨论一下。</p>
-<h3 id="变异输入"><a href="#变异输入" class="headerlink" title="变异输入"></a>变异输入</h3><h1 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/d86b9103aeba31e481b17d49c4236c48.jpeg" alt=""></h1><p>过去几年，我们看到很多“地下服务”层出不穷，它们大多是帮助网络犯罪行为进行“隐藏”的技术，简称FUD（fully undetectable）。这些服务包括能反抗防病毒软件的测试服务、能将恶意文件伪装的自动packers，让其躲过检测（并且还是有证书的！）。上方图片就展示了这两种服务。</p>
+<h3 id="变异输入"><a href="#变异输入" class="headerlink" title="变异输入"></a>变异输入</h3><h1 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/d86b9103aeba31e481b17d49c4236c48.jpeg" alt=""></h1><p>过去几年，我们看到很多“地下服务”层出不穷，它们大多是帮助网络犯罪行为进行“隐藏”的技术，简称FUD（fully undetectable）。这些服务包括能反抗防病毒软件的测试服务、能将恶意文件伪装的自动packers，让其躲过检测（并且还是有证书的！）。上方图片就展示了这两种服务。</p>
 <p>这种灰色服务的崛起说明了一个事实：</p>
 <p>攻击者不断优化它们的攻击技术，从而保证能将分类器的探测率最小化。</p>
 <p>所以，重要的是创建难以让攻击者优化的监测系统。具体策略有三：</p>
 <p>1.限制信息泄露</p>
-<h1 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/fd449bd1af34da8f1a5170f091bcbe8d.jpeg" alt=""></h1><p>这里的目标是，当攻击者调查你的系统时，保证让他们知道的越少越好。重要的是尽量让反馈最小化，同时尽可能地延迟，例如避免返回详细的错误代码或者置信度值。</p>
+<h1 id="-3"><a href="#-3" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/fd449bd1af34da8f1a5170f091bcbe8d.jpeg" alt=""></h1><p>这里的目标是，当攻击者调查你的系统时，保证让他们知道的越少越好。重要的是尽量让反馈最小化，同时尽可能地延迟，例如避免返回详细的错误代码或者置信度值。</p>
 <p>2.限制调查</p>
 <p>这一方法的目的是减少攻击者针对你系统测试的次数，通过限制测试，你能有效减少他们创造出有害信息的机会。</p>
-<h1 id="-3"><a href="#-3" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/a86e53860433831b35bd145d6233ee18.png" alt=""></h1><p>这种方法一般是在IP或账号等资源上实施速率限制，一个典型案例就是如果用户操作太频繁会要求输入验证码。</p>
-<h1 id="-4"><a href="#-4" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/94654dea7d4d923d71b7e7e2af9240fe.png" alt=""></h1><p>这种速率限制的消极影响就是，它会刺激哪些攻击者创建虚假账户，然后利用遭到侵入的用户电脑来丰富他们的IP池。业界广泛使用速率限制，也催生了很多黑色论坛，上面有许多账户和IP地址被贩卖，如上图所示。</p>
+<h1 id="-4"><a href="#-4" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/a86e53860433831b35bd145d6233ee18.png" alt=""></h1><p>这种方法一般是在IP或账号等资源上实施速率限制，一个典型案例就是如果用户操作太频繁会要求输入验证码。</p>
+<h1 id="-5"><a href="#-5" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/94654dea7d4d923d71b7e7e2af9240fe.png" alt=""></h1><p>这种速率限制的消极影响就是，它会刺激哪些攻击者创建虚假账户，然后利用遭到侵入的用户电脑来丰富他们的IP池。业界广泛使用速率限制，也催生了很多黑色论坛，上面有许多账户和IP地址被贩卖，如上图所示。</p>
 <p>3.集成学习</p>
 <p>最后，重要的是结合多种检测机制，让攻击者无处可逃。利用集成学习将不同的检测方法结合，例如基于信誉的机制、AI分类器、检测规则以及异常检测等，都可以提高系统的稳定性，因为攻击者要设计一款能逃脱所有检测的方法还是有些难度的。</p>
-<h1 id="-5"><a href="#-5" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/1c6a2fdd6ad6d429458885841133f816.png" alt=""></h1><p>如图，为了保证Gmail分类器对垃圾邮件的鲁棒性，我们结合了多种分类器和辅助系统，包括信誉系统、大型线性分类器、深度学习分类自和其他一些保密技术。</p>
+<h1 id="-6"><a href="#-6" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/1c6a2fdd6ad6d429458885841133f816.png" alt=""></h1><p>如图，为了保证Gmail分类器对垃圾邮件的鲁棒性，我们结合了多种分类器和辅助系统，包括信誉系统、大型线性分类器、深度学习分类自和其他一些保密技术。</p>
 <p>针对深度神经网络的对抗攻击案例</p>
-<h1 id="-6"><a href="#-6" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/843ed223062a6fab665637aff461a45b.jpeg" alt=""></h1><p>目前一个很活跃的领域是研究如何制造对抗样本骗过深度神经网络，人们目前可以在一幅图上进行十分细小的改动，几乎看不出来差别，就可以骗过神经网络。论智此前也有关于这项技术的报道：</p>
+<h1 id="-7"><a href="#-7" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/843ed223062a6fab665637aff461a45b.jpeg" alt=""></h1><p>目前一个很活跃的领域是研究如何制造对抗样本骗过深度神经网络，人们目前可以在一幅图上进行十分细小的改动，几乎看不出来差别，就可以骗过神经网络。论智此前也有关于这项技术的报道：</p>
 <p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzI3ODkxODU3Mg==&amp;mid=2247485080&amp;idx=1&amp;sn=664943cf362188767f3c116b4cfd525b&amp;chksm=eb4ee25bdc396b4dae480442a21fbb28c227adc6607c0a5c259e457c115ef1166228c5bd54e3&amp;scene=21#wechat_redirect">停车还是减速？伯克利实例演示对抗样本带来的潜在隐患</a></p>
 <p><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzI3ODkxODU3Mg==&amp;mid=2247485096&amp;idx=3&amp;sn=3f5be41af5612c4b3bb7fb9f1f4f165d&amp;chksm=eb4ee26bdc396b7d0e1464fb07a66698000cf03f276953e15da2850cceacdfd2bbaf01622b3f&amp;scene=21#wechat_redirect">谷歌推出对抗补丁，可导致分类器输出任意目标类</a></p>
 <p>最近有研究认为，CNN在面对对抗样本输入的时候非常脆弱，因为它们只学习数据集表面的规律，而不会生成和学习高级表示，从而不易受噪声的干扰。</p>
@@ -280,20 +255,20 @@
 <p>总有一天，一个从未预料到的攻击将会摆脱分类器控制，并造成巨大的影响。</p>
 </blockquote>
 <p>然而，这并不是因为你无法预料出现的是何种攻击，还活着攻击什么时候来。你可以对此进行计划，做好预防工作。下面是几个应对黑天鹅事件的探索方向：</p>
-<ol>
+<ul>
 <li><p>建立事故防御机制：首先要做的就是建立并测试恢复系统，一旦遭到攻击，还能够进行应对。</p>
 </li>
 <li><p>利用迁移学习保护新产品：一个关键难题就是你不能用历史数据继续训练分类器，而解决方法之一就是用迁移学习，可以重新使用现有数据，将其迁移运用到另一个域中。</p>
 </li>
 <li><p>使用异常检测：异常检测算法可以当做防御的第一道防线，因为一种新攻击会产生此前没有遇到过的异常，但这与你的系统相关。</p>
 </li>
-</ol>
+</ul>
 <p>还拿比特币为例，去年比特币价格疯狂上涨，很多人想免费“挖矿”，于是他们利用了许多攻击途径，包括入侵我们的免费方案、用偷来的信用卡作案、入侵合法用户的电脑或利用网络钓鱼的方法劫持云用户的账号。</p>
 <p>很快，这类攻击赢得了市场，YouTube上甚至还出了如何在谷歌云上挖矿的教程。</p>
 <p>幸运的是，我们建立了合适的异常检测系统，上图显示，当攻击者开始挖矿，他们的行为变化的非常明显，因为相关资源用量和传统合法资源使用是不一样的。我们用这种变化检测禁止了新型攻击，保证了云平台的稳定。</p>
 <h2 id="数据攻击"><a href="#数据攻击" class="headerlink" title="数据攻击"></a>数据攻击</h2><p>分类器面临的第二种攻击表现为，对抗样本想扰乱你的数据，从而让系统失灵。</p>
 <h3 id="模型更改（Model-skewing）"><a href="#模型更改（Model-skewing）" class="headerlink" title="模型更改（Model skewing）"></a>模型更改（Model skewing）</h3><p>第一种数据干扰被称为模型更改，攻击者会试着污染训练数据，改变模型的判断标准。</p>
-<h1 id="-7"><a href="#-7" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/4b3819f14ee4205aa338af50a75d35da.png" alt=""></h1><p>在实际中，我们经常能看到很多先进的垃圾邮件生产者试着逃过Gmail的过滤系统，将垃圾邮件伪装成正常邮件。上图表示在2017年11月末到2018年初，我们一共受到四次攻击，试图改变分类器。为减少此类攻击，应对策略有：</p>
+<h1 id="-8"><a href="#-8" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/4b3819f14ee4205aa338af50a75d35da.png" alt=""></h1><p>在实际中，我们经常能看到很多先进的垃圾邮件生产者试着逃过Gmail的过滤系统，将垃圾邮件伪装成正常邮件。上图表示在2017年11月末到2018年初，我们一共受到四次攻击，试图改变分类器。为减少此类攻击，应对策略有：</p>
 <ul>
 <li><p>合理数据采样。你需要保证一小部分实体，包括IP和用户，不依赖大量训练数据。尤其小心不要在用户的误报和漏报上添加过多权重。这可以通过限制每个人可贡献的样本来实现，或者根据已经报告的样本衰减权重。</p>
 </li>
@@ -319,7 +294,7 @@
 <li><p>会员信息泄露：攻击者会创建一个影子模型，让他知道训练模型都需要哪些特定元素。这类攻击不会复刻模型，只是潜在地泄露了敏感信息。</p>
 </li>
 </ul>
-<h1 id="-8"><a href="#-8" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/5785e9af55cc1cc47268b6eac671056d.png" alt=""></h1><p>目前针对此类攻击最有效的方法是PATE，它是由Ian Goodfellow等人提出的一种私密框架（上图），论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1802.08908。">https://arxiv.org/abs/1802.08908。</a></p>
+<h1 id="-9"><a href="#-9" class="headerlink" title=""></a><img src="https://img-blog.csdnimg.cn/img_convert/5785e9af55cc1cc47268b6eac671056d.png" alt=""></h1><p>目前针对此类攻击最有效的方法是PATE，它是由Ian Goodfellow等人提出的一种私密框架（上图），论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1802.08908。">https://arxiv.org/abs/1802.08908。</a></p>
 <p>如图，PATE的核心思想就是将数据分离，并且训练多个模型共同做决策。之后在决策中加入噪音，就像其他差分隐私系统一样。</p>
 <p>了解更多差分隐私的知识，可以阅读Matthew Green（苹果公司任职）的介绍文章：<a target="_blank" rel="noopener" href="https://blog.cryptographyengineering.com/2016/06/15/what-is-differential-privacy/">https://blog.cryptographyengineering.com/2016/06/15/what-is-differential-privacy/</a></p>
 <blockquote>
@@ -329,7 +304,7 @@
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>尽管机器学习还面临着很多现实挑战，但AI是建立防御机制的关键，随着AI框架日趋成熟，目前是建立AI防御的最好时机，如果你也感兴趣快动手试试吧！</p>
 <hr>
 <blockquote>
-<p><strong><em>本文参考出处</em></strong> <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ixdE3ld0qOOpj7F_kLmmSg">论智</a></p>
+<p><strong><em>本文参考出处论智</em></strong> <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ixdE3ld0qOOpj7F_kLmmSg"></a></p>
 </blockquote>
 
       
@@ -467,6 +442,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2022/10/20/Java%E5%AE%89%E5%85%A8%E4%B9%8BJavaAgent%E5%88%9D%E8%AF%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Java安全之JavaAgent初识
+        
+      </div>
+    </a>
+  
   
     <a href="/2020/12/25/fortify%E6%89%AB%E6%8F%8F%E7%BB%93%E6%9E%9C%E9%80%9F%E6%9F%A5(Java:JSP)/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">fortify扫描结果速查(Java/JSP)</div>
@@ -488,19 +472,6 @@
             </div>
         </div>
         
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%8A%97%E8%BE%93%E5%85%A5"><span class="toc-number">1.</span> <span class="toc-text">对抗输入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E5%BC%82%E8%BE%93%E5%85%A5"><span class="toc-number">0.1.</span> <span class="toc-text">变异输入</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-1"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-2"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-3"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-4"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-5"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-6"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E6%97%A5%E8%BE%93%E5%85%A5"><span class="toc-number">0.1.</span> <span class="toc-text">零日输入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%94%BB%E5%87%BB"><span class="toc-number">1.</span> <span class="toc-text">数据攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E6%9B%B4%E6%94%B9%EF%BC%88Model-skewing%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">模型更改（Model skewing）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-7"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E9%A6%88%E6%AD%A6%E5%99%A8%E5%8C%96"><span class="toc-number">0.1.</span> <span class="toc-text">反馈武器化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%AA%83%E5%8F%96%E6%94%BB%E5%87%BB"><span class="toc-number">1.</span> <span class="toc-text">模型窃取攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-8"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">1.</span> <span class="toc-text">结语</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
         
     </div>
 </aside>
@@ -713,6 +684,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
             
             <div class="clearfix"></div>
